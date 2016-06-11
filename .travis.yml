@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - "4.4.3"
+  - "4.4.5"
 env:
   - CXX=g++-4.8
 addons:
@@ -18,4 +18,4 @@ before_script:
 script:
   - make coverage
 after_script:
-  - if [[ `node --version` == *v4.4.3* ]]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi
+  - if [[ `node --version` == *v4.4.5* ]]; then cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js; fi

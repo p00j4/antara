@@ -1,10 +1,10 @@
-# CBGA - BAT (Budget Analysis Tool)
+# StoryGenerator - CBGA India's Budget Analysis Tool
 
 |  Branch   | Build   | Coverage  |
 |-----------|:-------:|:---------:|
-|Development| [![Build Status development](https://travis-ci.org/cbgaindia/bat.svg?branch=development)](https://travis-ci.org/cbgaindia/bat) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/bat/badge.svg?branch=development)](https://coveralls.io/github/cbgaindia/bat?branch=development) |
-|Master     | [![Build Status](https://travis-ci.org/cbgaindia/bat.svg?branch=master)](https://travis-ci.org/cbgaindia/bat) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/bat/badge.svg?branch=master)](https://coveralls.io/github/cbgaindia/bat?branch=master) |
-|Production | [![Build Status](https://travis-ci.org/cbgaindia/bat.svg?branch=production)](https://travis-ci.org/cbgaindia/bat) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/bat/badge.svg?branch=production)](https://coveralls.io/github/cbgaindia/bat?branch=production) |
+|Development| [![Build Status development](https://travis-ci.org/cbgaindia/story-generator.svg?branch=development)](https://travis-ci.org/cbgaindia/story-generator) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/story-generator/badge.svg?branch=development)](https://coveralls.io/github/cbgaindia/story-generator?branch=development) |
+|Master     | [![Build Status](https://travis-ci.org/cbgaindia/story-generator.svg?branch=master)](https://travis-ci.org/cbgaindia/story-generator) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/story-generator/badge.svg?branch=master)](https://coveralls.io/github/cbgaindia/story-generator?branch=master) |
+|Production | [![Build Status](https://travis-ci.org/cbgaindia/story-generator.svg?branch=production)](https://travis-ci.org/cbgaindia/story-generator) | [![Coverage Status](https://coveralls.io/repos/github/cbgaindia/story-generator/badge.svg?branch=production)](https://coveralls.io/github/cbgaindia/story-generator?branch=production) |
 
 ## Getting Started
 
