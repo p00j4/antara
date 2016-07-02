@@ -6,6 +6,15 @@
   flex: 1;
 }
 
+.mk-viz {
+  flex: 1;
+  display: flex;
+}
+
+.bar {
+  transition: height 500ms ease-in;  
+}
+
 .report {
   width: 80%;
   display: flex;
@@ -19,7 +28,9 @@
     .report-header-right {
       display: flex;
       flex-direction: column;
-      width: 50%;
+    }
+    .report-header-right {
+      max-width: 30%;
     }
     .report-title {
       font-size: 1.8em;
@@ -47,7 +58,6 @@
 
 .graph {
   width: 100%;
-  background: antiquewhite;
 }
 
 .budget-attributes {

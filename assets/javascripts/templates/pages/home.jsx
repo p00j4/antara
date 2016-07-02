@@ -5,7 +5,7 @@ var React    = require("react"),
 
 var IndicatorsSelector = require("../../components/indicators_selector"),
     StatesSelector     = require("../../components/states_selector"),
-    Visualization      = require("../../components/visualization");
+    Report     = require("../../components/report");
 
 var Template = function (self) {
   return (
@@ -38,39 +38,11 @@ var Template = function (self) {
       </div>
       <div className="content">
         <div className="content-body">
-          <div className="report">
-            <div className="report-header">
-              <div className="report-header-left">
-                <div className="report-title">Union Budget Value for Year 2014</div>
-                <div className="report-subtitle"> select states to explore more</div>
-              </div>
-              <div className="report-header-right">
-                <div className="budget-attributes">
-                  <div className="budget-attributes-title">Budget Attributes</div>
-                  <div className="budget-attributes-labels">
-                    <span className="budget-attribute selected">BE</span>
-                    <span className="budget-attribute">Ac</span>
-                    <span className="budget-attribute">RE</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Visualization location={self.props.location}
-                           params={self.props.params}
-                           indicators={self.state.indicators}
-                           states={self.state.states} />
-
-            <div className="report-footer">
-              <div className="report-footer-left">
-                <div className="report-footer-item"><i>source: </i><a>somelink</a></div>
-              </div>
-              <div className="report-footer-right">
-                <div className="report-footer-item" onClick={(event) => self.download()}>Download&nbsp;|&nbsp;</div>
-                <div className="report-footer-item">Embed&nbsp;|&nbsp;</div>
-                <div className="report-footer-item">Share</div>
-              </div>
-            </div>
-          </div>
+          <Report location={self.props.location}
+                  params={self.props.params}
+                  states={self.state.states}
+                  indicators={self.state.indicators}
+                  selectedStates={self.state.selectedStates}/>
           <div className="report-meta">
             <StatesSelector location={self.props.location}
                             params={self.props.params}

@@ -1,47 +1,31 @@
 "use strict";
-
+// ReactD3Basic = require("react-d3-basic"),
 var React        = require("react"),
-    ReactD3Basic = require("react-d3-basic");
+    ReactD3      = require("react-d3-components"),
+    $            = require("jquery");
 
-var LineChart = ReactD3Basic.LineChart;
+var LineChart = ReactD3.LineChart;
 
 var graph = function (self) {
-  var budgets     = self.getBudgets(),
-      data        = [
-        {
-          age  : 39,
-          index: 0
-        },
-        {
-          age  : 38,
-          index: 1
-        },
-        {
-          age  : 34,
-          index: 2
-        },
-        {
-          age  : 12,
-          index: 3
-        }
-      ],
-      chartSeries = [{
-        field: "age",
-        name : "Age",
-        color: "#ff7f0e",
-        style: {
-          "stroke-width"  : 2,
-          "stroke-opacity": 0.2,
-          "fill-opacity"  : 0.2
-        }
-      }],
-      x           = function (d) {
-        return d.index;
-      };
+  var BarChart = ReactD3.BarChart;
+
+  var config = self.props.config;
+  // var width = self.state.containerWidth;
+  // var height = self.state.containerHeight;
+  //TODO: figure out way to pass sizes from util
+  var width = $(".mk-viz").width();
+  var height = $(".mk-viz").height();
   return (
     /* jshint ignore:start */
     /* jscs ignore:start */
-    <LineChart width={900} height={400} data={data} chartSeries={chartSeries} x={x} />
+    <BarChart
+    groupedBars
+    data={config.data}
+    width={width}
+    height={height}
+    xAxis={{label:config.xAxisLabel}}
+    yAxis={{label:config.yAxisLabel}}
+    margin={{top: 10, bottom: 50, left: 50, right: 10}} />
     /* jshint ignore:end */
     /* jscs ignore:end */
   );
