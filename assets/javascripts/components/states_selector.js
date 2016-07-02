@@ -58,7 +58,21 @@ var StatesSelector = React.createClass({
       }
     };
   },
-
+  removeState: function(removeState){
+    var statesLeft = _.pull(this.state.selectedStates, removeState);
+    var queryStates = _.chain(this.props)
+      .get("location.query.states", "")
+      .split("|")
+      .valueOf();
+    this.props.location.search = "wadADA";
+    var newQueryState = _.pull(queryStates,removeState.slug);
+    
+    this.props.location.query.states = _.chain(newQueryState).uniq().join("|").valueOf();
+    
+    this.setState({
+      selectedStates: statesLeft
+    });
+  },
   onStateSearch: function (keyword) {
     this.setState({
       states: _.isEmpty(keyword) ? this.props.states : this.state.stateSearch.search(keyword)
