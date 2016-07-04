@@ -18,3 +18,4 @@ npm-shrinkwrap.json
 bat/
 org.datakind.cbga/
 web_app/
+.node-version
