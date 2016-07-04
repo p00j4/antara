@@ -54,7 +54,6 @@ var Report = React.createClass({
   },
   generateConfig: function(){
     var budget = this.getBudgets()[0];
-    console.log(budget)
     var data = this.transformData();
     if (budget) {
       return {
@@ -62,6 +61,8 @@ var Report = React.createClass({
         yAxisLabel: budget.indicators.unit,
         data: data
       };
+    } else {
+      return [];
     };
   },
   getBudgets: function () {
@@ -93,7 +94,6 @@ var Report = React.createClass({
   componentDidMount: function () {
     this.reinitialize(this.props);
   },
-
   componentWillReceiveProps: function (nextProps) {
     this.reinitialize(nextProps);
   },

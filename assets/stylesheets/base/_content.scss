@@ -1,9 +1,12 @@
 .content {
-  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: calc(100% - 50px);
+}
+.side-nav-active {
+  max-width: 80%;
 }
 
 @import "content-body";

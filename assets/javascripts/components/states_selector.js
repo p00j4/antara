@@ -41,6 +41,7 @@ var StatesSelector = React.createClass({
   },
 
   getStateLink: function (selectedState) {
+    console.log("selectedState",selectedState);
     return {
       pathname: this.props.location.pathname,
       query   : {

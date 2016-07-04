@@ -19,7 +19,8 @@ var HomePage = React.createClass({
   getInitialState: function () {
     return {
       states    : [],
-      indicators: []
+      indicators: [],
+      showSideNav: true
     };
   },
   componentWillMount: function () {
@@ -38,7 +39,11 @@ var HomePage = React.createClass({
         .valueOf()
     });
   },
-
+  changeNavState: function(){
+    this.setState({
+      showSideNav: !this.state.showSideNav
+    })
+  },
   render: function () {
     return HomePageTemplate(this);
   }

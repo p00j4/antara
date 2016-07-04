@@ -7,11 +7,10 @@ var IndicatorsSelector = require("../../components/indicators_selector"),
     StatesSelector     = require("../../components/states_selector"),
     Report     = require("../../components/report");
 
-var Template = function (self) {
-  return (
-    /* jshint ignore:start */
-    /* jscs ignore:start */
-    <div className="body">
+var SideNavTemplate = function(self){
+  if (self.state.showSideNav) {  
+    var boundClick = self.changeNavState.bind(self);
+    return (
       <div className="bg-primary side-nav">
         <div className="project-info">
           <div className="project-title">CBGA Story Generator</div>
@@ -22,7 +21,8 @@ var Template = function (self) {
         </div>
         <IndicatorsSelector location={self.props.location}
                             params={self.props.params}
-                            indicators={self.state.indicators} />
+                            indicators={self.state.indicators} 
+                            onClick={boundClick}/>
 
         <div className="credits">
           <div className="credits-info">
@@ -36,7 +36,27 @@ var Template = function (self) {
           </div>
         </div>
       </div>
-      <div className="content">
+    );
+  } else {
+    return(
+      <div className="side-nav-menu-icon" onClick={(event) => self.changeNavState()}>
+        <span className="glyphicon glyphicon-menu-hamburger"></span>
+      </div>
+    );
+  };
+};
+
+var Template = function (self) {
+  var contentCLass = "content "
+  if (self.state.showSideNav){
+    contentCLass = contentCLass+"side-nav-active"; 
+  }
+  return (
+    /* jshint ignore:start */
+    /* jscs ignore:start */
+    <div className="body">
+      {SideNavTemplate(self)}
+      <div className={contentCLass}>
         <div className="content-body">
           <Report location={self.props.location}
                   params={self.props.params}
