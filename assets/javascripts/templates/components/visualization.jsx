@@ -18,14 +18,15 @@ var graph = function (self) {
   return (
     /* jshint ignore:start */
     /* jscs ignore:start */
-    <BarChart
-    groupedBars
-    data={config.data}
-    width={width}
-    height={height}
-    xAxis={{label:config.xAxisLabel}}
-    yAxis={{label:config.yAxisLabel}}
-    margin={{top: 10, bottom: 50, left: 50, right: 10}} />
+      /* <BarChart
+      groupedBars
+      data={config.data}
+      width={width}
+      height={height}
+      xAxis={{label:config.xAxisLabel}}
+      yAxis={{label:config.yAxisLabel}}
+      margin={{top: 10, bottom: 50, left: 50, right: 10}} /> */
+      <div>Place holder for graphs </div>
     /* jshint ignore:end */
     /* jscs ignore:end */
   );
