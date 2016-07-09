@@ -7,6 +7,9 @@ var BarGroupChart = ReactD3Basic.BarGroupChart;
 
 var graph = function (self) {
   var budgets     = self.getBudgets(),
+  // commenting default assignment, data not refreshing on change, use
+  //    localhost:4001/#/?indicator=gross-state-domestic-product-gsdp&states=madhya-pradesh&_k=4fws4v
+  // getting initial data to load
       // data        = [
       //   {
       //     "be"     : 91947,
