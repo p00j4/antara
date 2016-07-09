@@ -4,8 +4,7 @@ var React       = require("react"),
     ReactDOM    = require("react-dom"),
     ReactRouter = require("react-router"),
     _           = require("lodash"),
-    $           = require("jquery"),
-    domtoimage = require('dom-to-image');;
+    $           = require("jquery");
 
 var Router      = ReactRouter.Router,
     Route       = ReactRouter.Route,
@@ -20,21 +19,9 @@ var HomePage = React.createClass({
   getInitialState: function () {
     return {
       states    : [],
-      indicators: []
+      indicators: [],
+      showSideNav: true
     };
-  },
-  download: function(){
-    console.log(domtoimage);
-    var report = document.querySelector("#main-container > div > div.content > div.content-body > div.report");
-    domtoimage.toSvg(report,{style:{"font-family": 'PT Sans'}})
-    .then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        document.body.appendChild(img);
-    })
-    .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-    });
   },
   componentWillMount: function () {
     this.setState({
@@ -52,7 +39,11 @@ var HomePage = React.createClass({
         .valueOf()
     });
   },
-
+  changeNavState: function(){
+    this.setState({
+      showSideNav: !this.state.showSideNav
+    })
+  },
   render: function () {
     return HomePageTemplate(this);
   }

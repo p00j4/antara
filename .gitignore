@@ -15,3 +15,7 @@ node_modules
 public
 tmp
 npm-shrinkwrap.json
+bat/
+org.datakind.cbga/
+web_app/
+.node-version

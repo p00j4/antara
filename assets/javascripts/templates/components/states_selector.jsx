@@ -23,9 +23,11 @@ var stateSelectionDisplay = function (self) {
               <span className="state-name">{state.name}</span>
             </div>
             <span className="state-remove">
-              <span className="glyphicon glyphicon-remove"
-                onClick={(event) => self.removeState(state)}>
-              </span>
+              <Link to={self.removeStateLink(state)}
+                    onClick={(event) => self.onStateRemoval(state)}>
+                <span className="glyphicon glyphicon-remove">
+                </span>
+              </Link>
             </span>
           </div>
         );

@@ -6,8 +6,17 @@
   flex: 1;
 }
 
+.mk-viz {
+  flex: 1;
+  display: flex;
+}
+
+.bar {
+  transition: height 500ms ease-in;  
+}
+
 .report {
-  width: 80%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,7 +28,9 @@
     .report-header-right {
       display: flex;
       flex-direction: column;
-      width: 50%;
+    }
+    .report-header-right {
+      max-width: 30%;
     }
     .report-title {
       font-size: 1.8em;
@@ -43,11 +54,18 @@
       display: flex;
     }
   }
+  .report-message {
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    background-color: #EDEDED;
+    align-items: center;
+    margin: 2em;
+  }
 }
 
 .graph {
   width: 100%;
-  background: antiquewhite;
 }
 
 .budget-attributes {

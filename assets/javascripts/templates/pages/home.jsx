@@ -5,13 +5,12 @@ var React    = require("react"),
 
 var IndicatorsSelector = require("../../components/indicators_selector"),
     StatesSelector     = require("../../components/states_selector"),
-    Visualization      = require("../../components/visualization");
+    Report     = require("../../components/report");
 
-var Template = function (self) {
-  return (
-    /* jshint ignore:start */
-    /* jscs ignore:start */
-    <div className="body">
+var SideNavTemplate = function(self){
+  if (self.state.showSideNav) {  
+    var boundClick = self.changeNavState.bind(self);
+    return (
       <div className="bg-primary side-nav">
         <div className="project-info">
           <div className="project-title">CBGA Story Generator</div>
@@ -22,7 +21,8 @@ var Template = function (self) {
         </div>
         <IndicatorsSelector location={self.props.location}
                             params={self.props.params}
-                            indicators={self.state.indicators} />
+                            indicators={self.state.indicators} 
+                            onClick={boundClick}/>
 
         <div className="credits">
           <div className="credits-info">
@@ -36,41 +36,33 @@ var Template = function (self) {
           </div>
         </div>
       </div>
-      <div className="content">
-        <div className="content-body">
-          <div className="report">
-            <div className="report-header">
-              <div className="report-header-left">
-                <div className="report-title">Union Budget Value for Year 2014</div>
-                <div className="report-subtitle"> select states to explore more</div>
-              </div>
-              <div className="report-header-right">
-                <div className="budget-attributes">
-                  <div className="budget-attributes-title">Budget Attributes</div>
-                  <div className="budget-attributes-labels">
-                    <span className="budget-attribute selected">BE</span>
-                    <span className="budget-attribute">Ac</span>
-                    <span className="budget-attribute">RE</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Visualization location={self.props.location}
-                           params={self.props.params}
-                           indicators={self.state.indicators}
-                           states={self.state.states} />
+    );
+  } else {
+    return(
+      <div className="side-nav-menu-icon" onClick={(event) => self.changeNavState()}>
+        <span className="glyphicon glyphicon-menu-hamburger"></span>
+      </div>
+    );
+  };
+};
 
-            <div className="report-footer">
-              <div className="report-footer-left">
-                <div className="report-footer-item"><i>source: </i><a>somelink</a></div>
-              </div>
-              <div className="report-footer-right">
-                <div className="report-footer-item" onClick={(event) => self.download()}>Download&nbsp;|&nbsp;</div>
-                <div className="report-footer-item">Embed&nbsp;|&nbsp;</div>
-                <div className="report-footer-item">Share</div>
-              </div>
-            </div>
-          </div>
+var Template = function (self) {
+  var contentCLass = "content "
+  if (self.state.showSideNav){
+    contentCLass = contentCLass+"side-nav-active"; 
+  }
+  return (
+    /* jshint ignore:start */
+    /* jscs ignore:start */
+    <div className="body">
+      {SideNavTemplate(self)}
+      <div className={contentCLass}>
+        <div className="content-body">
+          <Report location={self.props.location}
+                  params={self.props.params}
+                  states={self.state.states}
+                  indicators={self.state.indicators}
+                  selectedStates={self.state.selectedStates}/>
           <div className="report-meta">
             <StatesSelector location={self.props.location}
                             params={self.props.params}
