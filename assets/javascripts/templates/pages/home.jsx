@@ -48,9 +48,9 @@ var Template = function (self) {
                 <div className="budget-attributes">
                   <div className="budget-attributes-title">Budget Attributes</div>
                   <div className="budget-attributes-labels">
-                    <span className="budget-attribute selected">be</span>
-                    <span className="budget-attribute">ac</span>
-                    <span className="budget-attribute">re</span>
+                    <span className="budget-attribute selected">BE</span>
+                    <span className="budget-attribute">Ac</span>
+                    <span className="budget-attribute">RE</span>
                   </div>
                 </div>
               </div>
@@ -61,32 +61,17 @@ var Template = function (self) {
                            states={self.state.states} />
 
             <div className="report-footer">
-              <div className="report-footer-item">Download&nbsp;|&nbsp;</div>
-              <div className="report-footer-item">Embed&nbsp;|&nbsp;</div>
-              <div className="report-footer-item">Share</div>
+              <div className="report-footer-left">
+                <div className="report-footer-item"><i>source: </i><a>somelink</a></div>
+              </div>
+              <div className="report-footer-right">
+                <div className="report-footer-item" onClick={(event) => self.download()}>Download&nbsp;|&nbsp;</div>
+                <div className="report-footer-item">Embed&nbsp;|&nbsp;</div>
+                <div className="report-footer-item">Share</div>
+              </div>
             </div>
           </div>
           <div className="report-meta">
-            <div className="meta">
-              <div className="meta-info">
-                <div className="meta-info-title">
-                  <span>Title </span>
-                  <span>[Indicator]</span>
-                </div>
-                <div className="meta-info-value">
-                  <span>Resource:&nbsp;</span>
-                  <span>value</span>
-                </div>
-                <div className="meta-info-value">
-                  <span>Notes:&nbsp;</span>
-                  <span>value</span>
-                </div>
-                <div className="meta-info-value">
-                  <span>Unit:&nbsp;</span>
-                  <span>value</span>
-                </div>
-              </div>
-            </div>
             <StatesSelector location={self.props.location}
                             params={self.props.params}
                             states={self.state.states}
@@ -95,14 +80,14 @@ var Template = function (self) {
         </div>
         <div className="content-footer">
           <div className="information hr">
-            <div className="information-title">Budget Insights</div>
+            <div className="information-title">Description</div>
             <div className="information-content">
               Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum, neque sem
               pretium metus, quis mollis
             </div>
           </div>
           <div className="information">
-            <div className="information-title">Description [Indicator]</div>
+            <div className="information-title">Notes</div>
             <div className="information-content">
               Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum, neque sem
               pretium metus, quis mollis
