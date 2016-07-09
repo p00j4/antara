@@ -28,10 +28,10 @@ var Visualization = React.createClass({
   },
 
   componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener("resize", this.handleResize);
   },
   componentDidMount: function () {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
   
   },
   render: function () {

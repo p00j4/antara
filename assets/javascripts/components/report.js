@@ -3,7 +3,7 @@
 var React    = require("react"),
     ReactDOM = require("react-dom"),
     _        = require("lodash"),
-    domtoimage = require('dom-to-image');
+    domtoimage = require("dom-to-image");
 
 //TODO: need to generate properly
 var tempData = require("../../../data/temp.json");
@@ -15,14 +15,14 @@ var Report = React.createClass({
   download: function(){
     console.log(domtoimage);
     var report = document.querySelector("#main-container > div > div.content > div.content-body > div.report");
-    domtoimage.toSvg(report,{style:{"font-family": 'PT Sans'}})
+    domtoimage.toSvg(report,{style:{"font-family": "PT Sans"}})
     .then(function (dataUrl) {
         var img = new Image();
         img.src = dataUrl;
         document.body.appendChild(img);
     })
     .catch(function (error) {
-        console.error('oops, something went wrong!', error);
+        console.error("oops, something went wrong!", error);
     });
   },
   getSelectedStatesSlug: function (props) {
@@ -63,7 +63,7 @@ var Report = React.createClass({
       };
     } else {
       return [];
-    };
+    }
   },
   getBudgets: function () {
     var self                = this,
