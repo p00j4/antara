@@ -35,54 +35,80 @@ var Report = React.createClass({
       .valueOf();
   },
   reinitialize: function(props){
+    console.log("reinitialized called");
     var self                = this,
         selectedStatesSlugs = self.getSelectedStatesSlug(props);
+    var selectedStates = _.chain(props.states)
+                          .filter(function (state) {
+                            return _.includes(selectedStatesSlugs, state.slug);
+                          })
+                          .valueOf();
+    var selectedIndicator = _.find(props.indicators, function (indicator) {
+                                return _.eq(props.location.query.indicator, indicator.slug);
+                              })
     self.setState({
-      selectedStates   : _.chain(props.states)
-        .filter(function (state) {
-          return _.includes(selectedStatesSlugs, state.slug);
-        })
-        .valueOf(),
-      selectedIndicator: _.find(props.indicators, function (indicator) {
-        return _.eq(props.location.query.indicator, indicator.slug);
-      }),
-      config: this.generateConfig()
+      selectedStates   : selectedStates,
+      selectedIndicator: selectedIndicator,
+      config: this.generateConfig(selectedStates,selectedIndicator)
     });
   },
   transformData: function(budgets){
-    return tempData;
+    var collectData = [];
+    if (budgets && budgets.length > 0) {
+      _.each(budgets[0].indicators[0].budgets,function(value){
+        var itemData     = {};
+        itemData.from    = value.years.from;
+        itemData.to      = value.years.to;
+        itemData.actuals = 0;
+        itemData.re      = 0;
+        itemData.be      = 0;
+        _.each(value.allocations,function(value2){
+            if(value2.type=="Actuals")
+                itemData.actuals = value2.amount;
+            if(value2.type=="BE")
+                itemData.be = value2.amount;
+            if(value2.type=="RE")
+                itemData.re = value2.amount;
+        });
+        collectData.push(itemData);
+      });
+    };
+    return collectData;
   },
-  generateConfig: function(){
-    var budget = this.getBudgets()[0];
-    var data = this.transformData();
-    if (budget) {
+  generateConfig: function(selectedStates,selectedIndicator){
+    var budget = this.getBudgets(selectedStates,selectedIndicator);
+    var data = this.transformData(budget);
+    if (budget.length > 0) {
       return {
-        xAxisLabel: budget.name,
-        yAxisLabel: budget.indicators.unit,
+        xAxisLabel: budget[0].name,
+        yAxisLabel: budget[0].indicators.unit,
         data: data
       };
     } else {
       return [];
     }
   },
-  getBudgets: function () {
-    var self                = this,
-        selectedStatesSlugs = self.getSelectedStatesSlug(self.props);
-    return _.chain(DATA)
-      .filter(function (state) {
-        return _.includes(selectedStatesSlugs, state.slug);
-      })
-      .map(function (state) {
-        return _.assign(state, {
-          indicators: _.chain(state)
-            .get("indicators", [])
-            .filter(function (indicator) {
-              return _.eq(self.props.location.query.indicator, indicator.slug);
-            })
-            .valueOf()
-        });
-      })
-      .valueOf();
+  getBudgets: function (selectedStates,selectedIndicator) {
+    //TODO: right now hard coded for first state in the array
+    if (selectedStates[0] && selectedIndicator) {
+      return _.chain(DATA)
+        .filter(function (state) {
+          return _.includes(selectedStates[0].slug, state.slug);
+        })
+        .map(function (state) {
+          return _.assign(state, {
+            indicators: _.chain(state)
+              .get("indicators", [])
+              .filter(function (indicator) {
+                return _.eq(selectedIndicator.slug, indicator.slug);
+              })
+              .valueOf()
+          });
+        })
+        .valueOf();
+    } else {
+      return [];
+    };
   },
   getInitialState: function () {
     return {

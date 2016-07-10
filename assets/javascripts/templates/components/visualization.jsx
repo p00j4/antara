@@ -6,61 +6,11 @@ var React        = require("react"),
 var BarGroupChart = ReactD3Basic.BarGroupChart;
 
 var graph = function (self) {
-  var budgets     = self.getBudgets(),
+  console.log("self.props",self.props)
   // commenting default assignment, data not refreshing on change, use
   //    localhost:4001/#/?indicator=gross-state-domestic-product-gsdp&states=madhya-pradesh&_k=4fws4v
   // getting initial data to load
-      // data        = [
-      //   {
-      //     "be"     : 91947,
-      //     "actuals": 79921,
-      //     "re"     : 85762,
-      //     "from"   : 2009,
-      //     "to"     : 2010
-      //   },
-      // {
-      //     "be"     : 91947,
-      //     "actuals": 79921,
-      //     "re"     : 85762,
-      //     "from"   : 2010,
-      //     "to"     : 2011
-      // },
-      // {
-      //     "be"     : 91947,
-      //     "actuals": 79921,
-      //     "re"     : 85762,
-      //     "from"   : 2011,
-      //     "to"     : 2012
-      // },
-      // {
-      //     "be"     : 91947,
-      //     "actuals": 79921,
-      //     "re"     : 85762,
-      //     "from"   : 2012,
-      //     "to"     : 2013
-      // }
-      // ],
-      data = (function(){
-          var collectData = [];
-          _.each(budgets[0].indicators[0].budgets,function(value){
-                var itemData     = {};
-                itemData.from    = value.years.from;
-                itemData.to      = value.years.to;
-                itemData.actuals = 0;
-                itemData.re      = 0;
-                itemData.be      = 0;
-                _.each(value.allocations,function(value2){
-                    if(value2.type=="Actuals")
-                        itemData.actuals = value2.amount;
-                    if(value2.type=="BE")
-                        itemData.be = value2.amount;
-                    if(value2.type=="RE")
-                        itemData.re = value2.amount;
-                });
-              collectData.push(itemData);
-          })
-        return collectData;
-      })(),
+    var  data        = self.props.config.data,
       chartSeries = [
           {field: "be",
             name : "Budget Estimate",

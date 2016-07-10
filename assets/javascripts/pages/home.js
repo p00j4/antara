@@ -24,19 +24,21 @@ var HomePage = React.createClass({
     };
   },
   componentWillMount: function () {
+    var indicators = _.chain(DATA)
+        .first()
+        .get("indicators")
+        .map(function (indicator) {
+          return _.pick(indicator, ["name", "slug"]);
+        })
+        .valueOf();
     this.setState({
       states    : _.chain(DATA)
         .map(function (state) {
           return _.pick(state, ["name", "slug"]);
         })
         .valueOf(),
-      indicators: _.chain(DATA)
-        .first()
-        .get("indicators")
-        .map(function (indicator) {
-          return _.pick(indicator, ["name", "slug"]);
-        })
-        .valueOf()
+      indicators: indicators,
+      showSideNav: indicators.length > 0 ? false : true
     });
   },
   changeNavState: function(){
