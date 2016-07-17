@@ -19,7 +19,6 @@ var graph = function (self) {
     /* jshint ignore:start */
     /* jscs ignore:start */
     <BarGroupChart
-        margins={margins}
         width={900}
         height={400}
         data={data}
