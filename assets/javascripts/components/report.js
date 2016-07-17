@@ -45,7 +45,7 @@ var Report = React.createClass({
                           .valueOf();
     var selectedIndicator = _.find(props.indicators, function (indicator) {
                                 return _.eq(props.location.query.indicator, indicator.slug);
-                              })
+                              });
     self.setState({
       selectedStates   : selectedStates,
       selectedIndicator: selectedIndicator,
@@ -54,7 +54,7 @@ var Report = React.createClass({
   },
   transformData: function(budgets){
     var collectData = [];
-    if (budgets && budgets.length > 0) {
+    if (budgets && budgets.length == 1) {
       _.each(budgets[0].indicators[0].budgets,function(value){
         var itemData     = {};
         itemData.from    = value.years.from;
@@ -72,28 +72,108 @@ var Report = React.createClass({
         });
         collectData.push(itemData);
       });
-    };
+    }else{
+      _.each(budgets,function(value){
+        var statetemp = value.name;
+        var slugtemp = value.slug;
+        _.each(value.indicators[0].budgets,function(value2){
+          var itemData = {};
+          itemData.state = statetemp;
+          itemData.slug = slugtemp;
+          itemData.from    = value2.years.from;
+          itemData.to      = value2.years.to;
+          itemData[itemData.slug] = 0;
+          _.each(value2.allocations,function(value3){
+            if(value3.type=="BE")
+              itemData[itemData.slug] = value3.amount;
+              collectData.push(itemData);
+          });
+
+        })
+      })
+    }
     return collectData;
+  },
+  getRandomColor:function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  },
+  getChartSeries:function(selectedStates){
+    var chartSeries = [];
+    if(selectedStates.length>1){
+      var self = this;
+      _.each(selectedStates,function(selectedState){
+        var item = {};
+        item.field = selectedState.slug;
+        item.name = selectedState.name;
+        item.color = self.getRandomColor();
+        item.style = {
+          "stroke-width"  : 2,
+          "stroke-opacity": 0.2,
+          "fill-opacity"  : 0.2
+        };
+        chartSeries.push(item);
+      });
+    }else {
+      chartSeries = [
+        {
+          field: "be",
+          name: "Budget Estimate",
+          color: "#3CFF33",
+          style: {
+            "stroke-width": 2,
+            "stroke-opacity": 0.2,
+            "fill-opacity": 0.2
+          }
+        },
+        {
+          field: "re",
+          name: "Revised Estimate",
+          color: "#33BBFF",
+          style: {
+            "stroke-width": 2,
+            "stroke-opacity": 0.2,
+            "fill-opacity": 0.2
+          }
+        },
+        {
+          field: "actuals",
+          name: "Actuals",
+          color: "#C733FF",
+          style: {
+            "stroke-width": 2,
+            "stroke-opacity": 0.2,
+            "fill-opacity": 0.2
+          }
+        }];
+    }
+    return chartSeries;
   },
   generateConfig: function(selectedStates,selectedIndicator){
     var budget = this.getBudgets(selectedStates,selectedIndicator);
     var data = this.transformData(budget);
+    var chartSeries = this.getChartSeries(selectedStates);
     if (budget.length > 0) {
       return {
         xAxisLabel: budget[0].name,
         yAxisLabel: budget[0].indicators.unit,
-        data: data
+        data: data,
+        chartSeries: chartSeries
       };
     } else {
       return [];
     }
   },
   getBudgets: function (selectedStates,selectedIndicator) {
-    //TODO: right now hard coded for first state in the array
-    if (selectedStates[0] && selectedIndicator) {
+    // Filter based on the chosen states, right now only one indicator is supported
+    if (selectedStates && selectedIndicator) {
       return _.chain(DATA)
         .filter(function (state) {
-          return _.includes(selectedStates[0].slug, state.slug);
+          return _.includes(_.map(selectedStates,function(item){return item.slug}), state.slug);
         })
         .map(function (state) {
           return _.assign(state, {
@@ -108,7 +188,7 @@ var Report = React.createClass({
         .valueOf();
     } else {
       return [];
-    };
+    }
   },
   getInitialState: function () {
     return {

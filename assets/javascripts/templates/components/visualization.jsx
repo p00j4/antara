@@ -6,37 +6,11 @@ var React        = require("react"),
 var BarGroupChart = ReactD3Basic.BarGroupChart;
 
 var graph = function (self) {
-  console.log("self.props",self.props)
   // commenting default assignment, data not refreshing on change, use
   //    localhost:4001/#/?indicator=gross-state-domestic-product-gsdp&states=madhya-pradesh&_k=4fws4v
   // getting initial data to load
     var  data        = self.props.config.data,
-      chartSeries = [
-          {field: "be",
-            name : "Budget Estimate",
-            color: "#3CFF33",
-            style: {
-              "stroke-width"  : 2,
-              "stroke-opacity": 0.2,
-              "fill-opacity"  : 0.2
-            }},
-          {field: "re",
-              name : "Revised Estimate",
-              color: "#33BBFF",
-              style: {
-                  "stroke-width"  : 2,
-                  "stroke-opacity": 0.2,
-                  "fill-opacity"  : 0.2
-              }},
-          {field: "actuals",
-              name : "Actuals",
-              color: "#C733FF",
-              style: {
-                  "stroke-width"  : 2,
-                  "stroke-opacity": 0.2,
-                  "fill-opacity"  : 0.2
-              }
-      }],
+      chartSeries = self.props.config.chartSeries,
       xScale = "ordinal",
       x = function (d) {
         return d.from +" to "+ d.to;
@@ -45,6 +19,7 @@ var graph = function (self) {
     /* jshint ignore:start */
     /* jscs ignore:start */
     <BarGroupChart
+        margins={margins}
         width={900}
         height={400}
         data={data}
