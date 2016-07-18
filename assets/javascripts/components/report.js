@@ -3,27 +3,26 @@
 var React      = require("react"),
     ReactDOM   = require("react-dom"),
     _          = require("lodash"),
-    domtoimage = require("dom-to-image");
+    DOMToImage = require("dom-to-image");
 
-//TODO: need to generate properly
 var tempData = require("../../../data/temp.json");
 var DATA     = require("../utils/data").DATA;
 
 var ReportTemplate = require("../templates/components/report.jsx");
 
 var Report = React.createClass({
+
   download                 : function () {
-    console.log(domtoimage);
     var report = document.querySelector("#main-container > div > div.content > div.content-body > div.report");
-    domtoimage.toSvg(report, {
-      style: {
+    DOMToImage.toSvg(report, {
+      "style": {
         "font-family": "PT Sans"
       }
     }).then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        document.body.appendChild(img);
-      })
+      var img = new Image();
+      img.src = dataUrl;
+      document.body.appendChild(img);
+    })
       .catch(function (error) {
         console.error("oops, something went wrong!", error);
       });
@@ -38,7 +37,6 @@ var Report = React.createClass({
       .valueOf();
   },
   reinitialize             : function (props) {
-    console.log("reinitialized called");
     var self                = this,
         selectedStatesSlugs = self.getSelectedStatesSlug(props);
     var selectedStates      = _.chain(props.states)
@@ -176,7 +174,9 @@ var Report = React.createClass({
     if (selectedStates && selectedIndicator) {
       return _.chain(DATA)
         .filter(function (state) {
-          return _.includes(_.map(selectedStates, function (item) {return item.slug}), state.slug);
+          return _.includes(_.map(selectedStates, function (item) {
+            return item.slug;
+          }), state.slug);
         })
         .map(function (state) {
           return _.assign(state, {

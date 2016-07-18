@@ -9,11 +9,19 @@ var StatesSelectorTemplate = require("../templates/components/states_selector.js
 
 var StatesSelector = React.createClass({
 
+  getDefaultProps: function () {
+    return {
+      maximumStatesCount: 5
+    };
+  },
+
   getInitialState: function () {
     return {
       states        : this.props.states,
       selectedStates: [],
-      stateSearch   : new Fuse(this.props.states, {keys: ["name"]})
+      stateSearch   : new Fuse(this.props.states, {
+        keys: ["name"]
+      })
     };
   },
 
@@ -40,61 +48,70 @@ var StatesSelector = React.createClass({
       .valueOf();
   },
 
-  getStateLink: function (selectedState) {
-    return {
-      pathname: this.props.location.pathname,
-      query   : {
-        indicator: this.props.location.query.indicator,
-        states   : _.chain(this.props)
-          .get("location.query.states", "")
-          .split("|")
-          .filter(function (state) {
-            return !_.isEmpty(state);
-          })
-          .concat(selectedState.slug)
-          .uniq()
-          .join("|")
-          .valueOf()
-      }
-    };
-  },
-  removeStateLink: function(removeState){
-    return {
-      pathname: this.props.location.pathname,
-      query   : {
-        indicator: this.props.location.query.indicator,
-        states   : _.chain(this.props)
-          .get("location.query.states", "")
-          .split("|")
-          .filter(function (state) {
-            return !_.isEmpty(state);
-          })
-          .pull(removeState.slug)
-          .uniq()
-          .join("|")
-          .valueOf()
-      }
-    };
-  },
-  onStateRemoval: function(removeState){
-    var statesLeft = _.pull(this.state.selectedStates, removeState);
-    
-    this.setState({
-      selectedStates: statesLeft
-    });
-  },
-  onStateSearch: function (keyword) {
-    this.setState({
-      states: _.isEmpty(keyword) ? this.props.states : this.state.stateSearch.search(keyword)
-    });
+  canAddState: function () {
+    return (_.size(this.state.selectedStates) < this.props.maximumStatesCount);
   },
 
-  onStateSelection: function (state) {
-    if (!_.includes(this.getSelectedStatesSlug(), state.slug)) {
+  addStateLink: function (selectedState) {
+    var states = _.chain(this.props)
+      .get("location.query.states", "")
+      .split("|")
+      .filter(function (state) {
+        return !_.isEmpty(state);
+      })
+      .valueOf();
+    if (this.canAddState()) {
+      states = _.concat(states, _.get(selectedState, "slug", ""));
+    }
+    return {
+      pathname: this.props.location.pathname,
+      query   : {
+        indicator: this.props.location.query.indicator,
+        states   : _.chain(states)
+          .uniq()
+          .join("|")
+          .valueOf()
+      }
+    };
+  },
+
+  onStateAddition: function (state) {
+    if (!_.includes(this.getSelectedStatesSlug(), state.slug) && this.canAddState()) {
       this.setState({
         selectedStates: _.concat(this.state.selectedStates, state)
       });
     }
+  },
+
+  removeStateLink: function (state) {
+    return {
+      pathname: this.props.location.pathname,
+      query   : {
+        indicator: this.props.location.query.indicator,
+        states   : _.chain(this.props)
+          .get("location.query.states", "")
+          .split("|")
+          .filter(function (state) {
+            return !_.isEmpty(state);
+          })
+          .pull(_.get(state, "slug"))
+          .uniq()
+          .join("|")
+          .valueOf()
+      }
+    };
+  },
+
+  onStateRemoval: function (state) {
+    this.setState({
+      selectedStates: _.pull(this.state.selectedStates, state)
+    });
+  },
+
+  onStateSearch: function (keyword) {
+    this.setState({
+      states: _.isEmpty(keyword) ? this.props.states : this.state.stateSearch.search(keyword)
+    });
   },
 
   render: function () {

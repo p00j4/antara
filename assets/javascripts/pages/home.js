@@ -3,8 +3,7 @@
 var React       = require("react"),
     ReactDOM    = require("react-dom"),
     ReactRouter = require("react-router"),
-    _           = require("lodash"),
-    $           = require("jquery");
+    _           = require("lodash");
 
 var Router      = ReactRouter.Router,
     Route       = ReactRouter.Route,
@@ -18,34 +17,39 @@ var HomePage = React.createClass({
 
   getInitialState: function () {
     return {
-      states    : [],
-      indicators: [],
-      showSideNav: true
+      states            : [],
+      indicators        : [],
+      showSideNavigation: true
     };
   },
+
   componentWillMount: function () {
-    var indicators = _.chain(DATA)
-        .first()
-        .get("indicators")
-        .map(function (indicator) {
-          return _.pick(indicator, ["name", "slug"]);
-        })
-        .valueOf();
+    var attributes = ["name", "slug"],
+        indicators = _.chain(DATA)
+          .first()
+          .get("indicators")
+          .map(function (indicator) {
+            return _.pick(indicator, attributes);
+          })
+          .valueOf(),
+        states     = _.chain(DATA)
+          .map(function (state) {
+            return _.pick(state, attributes);
+          })
+          .valueOf();
     this.setState({
-      states    : _.chain(DATA)
-        .map(function (state) {
-          return _.pick(state, ["name", "slug"]);
-        })
-        .valueOf(),
-      indicators: indicators,
-      showSideNav: indicators.length > 0 ? false : true
+      states            : states,
+      indicators        : indicators,
+      showSideNavigation: _.isEmpty(indicators)
     });
   },
-  changeNavState: function(){
+
+  toggleSideNavigation: function () {
     this.setState({
-      showSideNav: !this.state.showSideNav
-    })
+      showSideNavigation: !this.state.showSideNavigation
+    });
   },
+
   render: function () {
     return HomePageTemplate(this);
   }

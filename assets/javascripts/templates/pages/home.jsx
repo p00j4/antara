@@ -5,11 +5,10 @@ var React    = require("react"),
 
 var IndicatorsSelector = require("../../components/indicators_selector"),
     StatesSelector     = require("../../components/states_selector"),
-    Report     = require("../../components/report");
+    Report             = require("../../components/report");
 
-var SideNavTemplate = function(self){
-  if (self.state.showSideNav) {  
-    var boundClick = self.changeNavState.bind(self);
+var SideNavigationTemplate = function (self) {
+  if (self.state.showSideNavigation) {
     return (
       <div className="bg-primary side-nav">
         <div className="project-info">
@@ -21,8 +20,8 @@ var SideNavTemplate = function(self){
         </div>
         <IndicatorsSelector location={self.props.location}
                             params={self.props.params}
-                            indicators={self.state.indicators} 
-                            onClick={boundClick}/>
+                            indicators={self.state.indicators}
+                            onClick={(event) => self.toggleSideNavigation()} />
 
         <div className="credits">
           <div className="credits-info">
@@ -37,37 +36,36 @@ var SideNavTemplate = function(self){
         </div>
       </div>
     );
-  } else {
-    return(
-      <div className="side-nav-menu-icon" onClick={(event) => self.changeNavState()}>
-        <span className="glyphicon glyphicon-menu-hamburger"></span>
-      </div>
-    );
-  };
+  }
+  return (
+    <div className="side-nav-menu-icon" onClick={(event) => self.toggleSideNavigation()}>
+      <span className="glyphicon glyphicon-menu-hamburger"></span>
+    </div>
+  );
 };
 
 var Template = function (self) {
-  var contentCLass = "content "
-  if (self.state.showSideNav){
-    contentCLass = contentCLass+"side-nav-active"; 
+  var contentCLass = "content ";
+  if (self.state.showSideNavigation) {
+    contentCLass = contentCLass + "side-nav-active";
   }
   return (
     /* jshint ignore:start */
     /* jscs ignore:start */
     <div className="body">
-      {SideNavTemplate(self)}
+      {SideNavigationTemplate(self)}
       <div className={contentCLass}>
         <div className="content-body">
           <Report location={self.props.location}
                   params={self.props.params}
                   states={self.state.states}
                   indicators={self.state.indicators}
-                  selectedStates={self.state.selectedStates}/>
+                  selectedStates={self.state.selectedStates} />
+
           <div className="report-meta">
             <StatesSelector location={self.props.location}
                             params={self.props.params}
-                            states={self.state.states}
-                            selectedStates={self.state.selectedStates} />
+                            states={self.state.states} />
           </div>
         </div>
         <div className="content-footer">

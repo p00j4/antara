@@ -44,12 +44,12 @@ var IndicatorsSelector = React.createClass({
   },
 
   onIndicatorSelection: function (indicator) {
-    this.props.onClick();
     if (!_.eq(this.props.location.query.indicator, indicator.slug)) {
       this.setState({
         selectedIndicator: indicator
       });
     }
+    this.props.onClick();
   },
 
   render: function () {

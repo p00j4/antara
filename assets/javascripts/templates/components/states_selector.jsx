@@ -15,9 +15,9 @@ var stateSelectionDisplay = function (self) {
   }
   return (
     <div className="states-selected-active">
-      {self.state.selectedStates.map(function(state,i){
+      {self.state.selectedStates.map(function (state) {
         return (
-          <div className="state" key={state.slug}> 
+          <div className="state" key={state.slug}>
             <div className="state-content">
               <span className="state-avtar">{state.name.charAt(0).toUpperCase()}</span>
               <span className="state-name">{state.name}</span>
@@ -41,7 +41,6 @@ var Template = function (self) {
     /* jshint ignore:start */
     /* jscs ignore:start */
     <div className="state-selector">
-      
       <div className="states">
         <div className="states-header">
           <div className="states-header-title">States</div>
@@ -56,12 +55,21 @@ var Template = function (self) {
             </button>
             <ul className="dropdown-menu" aria-labelledby="select-state-dropdown">
               {self.state.states.map(function (state, stateIndex) {
+                if (self.canAddState()) {
+                  return (
+                    <li key={stateIndex}>
+                      <Link to={self.addStateLink(state)}
+                            onClick={(event) => self.onStateAddition(state)}>
+                        {state.name}
+                      </Link>
+                    </li>
+                  );
+                }
                 return (
                   <li key={stateIndex}>
-                    <Link to={self.getStateLink(state)}
-                          onClick={(event) => self.onStateSelection(state)}>
+                    <a href="javascript: void(0);">
                       {state.name}
-                    </Link>
+                    </a>
                   </li>
                 );
               })}

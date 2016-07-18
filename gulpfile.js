@@ -173,7 +173,7 @@ gulp.task("serve", ["watch"], function () {
     script   : "server.js",
     delayTime: 1,
     env      : {
-      PORT: 4001
+      PORT: 5001
     },
     watch    : jsFiles
   };

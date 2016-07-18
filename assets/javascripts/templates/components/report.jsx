@@ -6,22 +6,21 @@ var React    = require("react"),
 var Visualization = require("../../components/visualization");
 
 var Template = function (self) {
-
-  if(!(self.state.selectedIndicator && self.state.selectedIndicator.name && self.state.selectedIndicator.slug)){
-   return( 
+  if (!(self.state.selectedIndicator && self.state.selectedIndicator.name && self.state.selectedIndicator.slug)) {
+    return (
       <div className="report">
         <span className="report-message">
           Please Select an indicator
         </span>
       </div>
-    ); 
-  } else if(self.state.selectedStates.length === 0){
+    );
+  } else if (self.state.selectedStates.length === 0) {
     return (
       <div className="report">
         <span className="report-message">
-          Please Select atleast one state
+          Please Select at-least one state
         </span>
-      </div>  
+      </div>
     );
   } else {
     return (
@@ -36,7 +35,7 @@ var Template = function (self) {
               <div className="budget-attributes-title">Budget Attributes</div>
               <div className="budget-attributes-labels">
                 <span className="budget-attribute selected">BE</span>
-                <span className="budget-attribute">Ac</span>
+                <span className="budget-attribute">AC</span>
                 <span className="budget-attribute">RE</span>
               </div>
             </div>
@@ -59,6 +58,6 @@ var Template = function (self) {
       </div>
     );
   }
-}
+};
 
 module.exports = Template;
