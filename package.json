@@ -38,7 +38,6 @@
     "react"                 : "~0.14.8",
     "react-addons-update"   : "~0.14.8",
     "react-d3-basic"        : "~1.6.11",
-    "react-d3-components"   : "~0.6.4",
     "react-dom"             : "~0.14.8",
     "react-router"          : "~2.0.1"
   },
