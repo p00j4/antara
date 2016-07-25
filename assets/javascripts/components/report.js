@@ -1,11 +1,12 @@
 "use strict";
 
 var React      = require("react"),
-    ReactDOM   = require("react-dom"),
     _          = require("lodash"),
     DOMToImage = require("dom-to-image");
 
-var DATA = require("../utils/data").DATA;
+var COLORS = require("../utils/data").COLORS;
+var wrappedColors = _(COLORS);
+
 
 var ReportTemplate = require("../templates/components/report.jsx");
 
@@ -68,64 +69,46 @@ var Report = React.createClass({
       .valueOf();
   },
 
+  getTypeOper:function(inputvalue,inputtype){
+    var typevalue = inputvalue.allocations.filter(function(allocation){return allocation.type === inputtype;})[0];
+    if(!typevalue){
+      return 0;
+    }
+    return typevalue.amount;
+  },
+
   transformData: function (budgets) {
-    var collectData = [];
+    var self = this;
     if (budgets && budgets.length === 1) {
-      _.each(budgets[0].indicators[0].budgets, function (value) {
-        var itemData     = {};
-        itemData.from    = value.years.from;
-        itemData.to      = value.years.to;
-        itemData.actuals = 0;
-        itemData.re      = 0;
-        itemData.be      = 0;
-        _.each(value.allocations, function (value2) {
-          if (value2.type === "Actuals") {
-            itemData.actuals = value2.amount;
-          }
-          if (value2.type === "BE") {
-            itemData.be = value2.amount;
-          }
-          if (value2.type === "RE") {
-            itemData.re = value2.amount;
-          }
-        });
-        collectData.push(itemData);
-      });
-    } else {
-      _.each(budgets, function (value) {
-        var statetemp = value.name;
-        var slugtemp  = value.slug;
-        _.each(value.indicators[0].budgets, function (value2) {
-          var itemData            = {};
-          itemData.state          = statetemp;
-          itemData.slug           = slugtemp;
-          itemData.from           = value2.years.from;
-          itemData.to             = value2.years.to;
-          itemData[itemData.slug] = 0;
-          _.each(value2.allocations, function (value3) {
-            if (value3.type === "BE") {
-              itemData[itemData.slug] = value3.amount;
-            }
-            collectData.push(itemData);
-          });
-        });
+      return _.map(budgets[0].indicators[0].budgets, function (value) {
+        return {
+          from: value.years.from,
+          to: value.years.to,
+          actuals: self.getTypeOper(value, "Actuals"),
+          re: self.getTypeOper(value, "BE"),
+          be: self. getTypeOper(value, "RE")
+        };
       });
     }
-    return collectData;
-  },
 
-  getRandomColor: function getRandomColor() {
-    var letters = "0123456789ABCDEF".split("");
-    var color   = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  return _.flatten(_.map(budgets, function (value) {
+      var statetemp = value.name;
+      var slugtemp  = value.slug;
+      return _.map(value.indicators[0].budgets,function(allocation){
+         return _.assign({
+           state: statetemp,
+           slug : slugtemp
+           },{
+           from : allocation.years.from,
+           to   : allocation.years.to,
+           [slugtemp] : self.getTypeOper(allocation,"BE")
+         });
+       });
+  }));
   },
-
 
   getChartSeries: function (selectedStates) {
-    var self  = this,
+    wrappedColors = _(COLORS),
         style = {
           strokeWidth  : 2,
           strokeOpacity: 0.8,
@@ -136,7 +119,7 @@ var Report = React.createClass({
         return {
           field: selectedState.slug,
           name : selectedState.name,
-          color: self.getRandomColor(),
+          color: wrappedColors.next().value,
           style: style
         };
       });
@@ -144,17 +127,17 @@ var Report = React.createClass({
     return [{
       field: "be",
       name : "Budget Estimate",
-      color: "#00364D",
+      color: wrappedColors.next().value,
       style: style
     }, {
       field: "re",
       name : "Revised Estimate",
-      color: "#A6C93E",
+      color: wrappedColors.next().value,
       style: style
     }, {
       field: "actuals",
       name : "Actuals",
-      color: "#00608B",
+      color: wrappedColors.next().value,
       style: style
     }];
   },
@@ -176,6 +159,7 @@ var Report = React.createClass({
   },
 
   getBudgets: function (selectedStates, selectedIndicator) {
+    var DATA = require("../utils/data").DATA;
     if (_.isEmpty(selectedStates) || _.isEmpty(selectedIndicator)) {
       return [];
     }
