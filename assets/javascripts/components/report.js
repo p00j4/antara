@@ -95,16 +95,14 @@ var Report = React.createClass({
     }
 
   return _.flatten(_.map(budgets, function (value) {
-      var statetemp = value.name;
-      var slugtemp  = value.slug;
       return _.map(value.indicators[0].budgets,function(allocation){
          return _.assign({
-           state: statetemp,
-           slug : slugtemp
+           state: value.name,
+           slug : value.slug
            },{
            from : allocation.years.from,
            to   : allocation.years.to,
-           [slugtemp] : self.getTypeOper(allocation,"BE")
+           [value.slug] : self.getTypeOper(allocation,"BE")
          });
        });
   }));

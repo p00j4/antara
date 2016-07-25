@@ -1,10 +1,11 @@
 "use strict";
 
 var React        = require("react"),
-    ReactD3Basic = require("react-d3-basic");
+    ReactD3Basic = require("react-d3-basic"),
+    ReactD3ToolTip = require("react-d3-tooltip");
 
-var BarGroupChart = ReactD3Basic.BarGroupChart;
-
+//var BarGroupChart = ReactD3Basic.BarGroupChart;
+var BarGroupChart = ReactD3ToolTip.BarGroupTooltip;
 var graph = function (self) {
   var data        = self.props.config.data,
       chartSeries = self.props.config.chartSeries,
