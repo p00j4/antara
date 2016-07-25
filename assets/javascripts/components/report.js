@@ -1,8 +1,11 @@
 "use strict";
 
 var React      = require("react"),
+    ReactDOM   = require("react-dom"),
     _          = require("lodash"),
     DOMToImage = require("dom-to-image");
+
+var DATA = require("../utils/data").DATA;
 
 var COLORS = require("../utils/data").COLORS;
 var wrappedColors = _(COLORS);
@@ -108,7 +111,8 @@ var Report = React.createClass({
   },
 
   getChartSeries: function (selectedStates) {
-    wrappedColors = _(COLORS),
+    wrappedColors = _(COLORS);
+    var self  = this,
         style = {
           strokeWidth  : 2,
           strokeOpacity: 0.8,
