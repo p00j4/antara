@@ -161,7 +161,7 @@ var Report = React.createClass({
   },
 
   getBudgets: function (selectedStates, selectedIndicator) {
-    var DATA = require("../utils/data").DATA;
+    var DATA = JSON.parse(JSON.stringify(require("../utils/data").DATA));
     if (_.isEmpty(selectedStates) || _.isEmpty(selectedIndicator)) {
       return [];
     }
