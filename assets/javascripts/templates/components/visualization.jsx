@@ -2,7 +2,8 @@
 
 var React        = require("react"),
     ReactD3Basic = require("react-d3-basic"),
-    ReactD3ToolTip = require("react-d3-tooltip");
+    ReactD3ToolTip = require("react-d3-tooltip"),
+    SimpleTooltipStyle = require('react-d3-tooltip').SimpleTooltip;
 
 //var BarGroupChart = ReactD3Basic.BarGroupChart;
 var BarGroupChart = ReactD3ToolTip.BarGroupTooltip;
@@ -24,7 +25,9 @@ var graph = function (self) {
       x={x}
       xScale={xScale}
       showXGrid={false}
-      showYGrid={false} />
+      showYGrid={false}>
+        <SimpleTooltipStyle/>
+        </BarGroupChart>
     /* jshint ignore:end */
     /* jscs ignore:end */
   );
