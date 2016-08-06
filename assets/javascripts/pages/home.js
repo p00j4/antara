@@ -56,23 +56,13 @@ var HomePage = React.createClass({
   }
 });
 
-var NotFound = React.createClass({
-  render: function() {
-    return (
-      <div className="no-match">
-        Woah dere!!! 404 Not Found From Julia Gs Sample App Buddy...Fix that!!!
-      </div>
-    );
-  }
-});
-
 /* istanbul ignore next */
 var homePage = function (container) {
   return ReactDOM.render(
     <Router history={hashHistory}>
-      <Route path="/" component={Embed} />
-      <Route path="/embed" component={HomePage} />
-      <Route path="*" component={NotFound} />
+      <Route path="/" component={HomePage} />
+      <Route path="/embed" component={Embed} />
+      <Route path="*" component={HomePage} />
     </Router>,
     document.getElementById(container));
 };
