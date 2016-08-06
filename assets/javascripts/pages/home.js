@@ -11,6 +11,7 @@ var Router      = ReactRouter.Router,
 
 var DATA = require("../utils/data").DATA;
 
+var Embed = require("../components/embed.js");
 var HomePageTemplate = require("../templates/pages/home.jsx");
 
 var HomePage = React.createClass({
@@ -55,13 +56,24 @@ var HomePage = React.createClass({
   }
 });
 
+var NotFound = React.createClass({
+  render: function() {
+    return (
+      <div className="no-match">
+        Woah dere!!! 404 Not Found From Julia Gs Sample App Buddy...Fix that!!!
+      </div>
+    );
+  }
+});
+
 /* istanbul ignore next */
 var homePage = function (container) {
   return ReactDOM.render(
-    React.createElement(Router, {
-      history: hashHistory,
-      routes : require("../utils/routes")(HomePage)
-    }),
+    <Router history={hashHistory}>
+      <Route path="/" component={Embed} />
+      <Route path="/embed" component={HomePage} />
+      <Route path="*" component={NotFound} />
+    </Router>,
     document.getElementById(container));
 };
 
