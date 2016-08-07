@@ -86,8 +86,8 @@ var Report = React.createClass({
           from: value.years.from,
           to: value.years.to,
           actuals: self.getTypeOper(value, "Actuals"),
-          re: self.getTypeOper(value, "BE"),
-          be: self. getTypeOper(value, "RE")
+          re: self.getTypeOper(value, "RE"),
+          be: self. getTypeOper(value, "BE")
         };
       });
     }
