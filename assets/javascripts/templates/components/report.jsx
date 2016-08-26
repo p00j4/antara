@@ -2,11 +2,14 @@
 
 var React    = require("react"),
     ReactDOM = require("react-dom"),
-    _        = require("lodash");
+    _        = require("lodash"),
+    $          = require("jquery"),
+    ReactSocial = require("react-social");
 
 var Visualization = require("../../components/visualization");
 
 var Template = function (self) {
+  
   if (_.isEmpty(self.state.selectedIndicator)) {
     return (
       <div className="report">
@@ -25,6 +28,13 @@ var Template = function (self) {
       </div>
     );
   }
+  var url = window.location.href;
+  
+  var tempArray = url.split("#");
+  var embedString = "#/embed";
+  var embedUrl = tempArray[0] + embedString + tempArray[1];
+
+  var TwitterButton = ReactSocial.TwitterButton;
   return (
     <div className="report">
       <div className="report-header">
@@ -57,11 +67,24 @@ var Template = function (self) {
           <div className="report-footer-item" onClick={(event) => self.onDownload()}>
             Download&nbsp;|&nbsp;
           </div>
-          <div className="report-footer-item">
+          <div className="report-footer-item" data-toggle="modal" data-target="#embed">
             Embed&nbsp;|&nbsp;
           </div>
           <div className="report-footer-item">
-            Share
+            <TwitterButton url={url}>tweet</TwitterButton>
+          </div>
+        </div>
+      </div>
+      <div className="modal fade" id="embed" tabindex="-1" role="dialog" aria-labelledby="embed">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title" id="embedLabel">Embed Url</h4>
+            </div>
+            <div className="modal-body">
+              <textarea className="embed-url" value={embedUrl} autofocus></textarea>
+            </div>
           </div>
         </div>
       </div>

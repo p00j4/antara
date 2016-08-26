@@ -52,6 +52,9 @@
     padding: .5em;
     .report-footer-right {
       display: flex;
+      .report-footer-item {
+        cursor: pointer;
+      }
     }
   }
   .report-message {
@@ -99,4 +102,8 @@
       padding: .1em .8em;
     }
   }
+}
+
+.embed-url {
+  width: 100%;
 }

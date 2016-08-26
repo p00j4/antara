@@ -56,9 +56,10 @@ var Report = React.createClass({
         "font-family": "PT Sans"
       }
     }).then(function (dataUrl) {
-      var img = new Image();
-      img.src = dataUrl;
-      document.body.appendChild(img);
+      var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();
     }).catch(console.error);
   },
 
