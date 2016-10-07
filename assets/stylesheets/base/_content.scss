@@ -9,6 +9,11 @@
   max-width: 80%;
 }
 
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
+
 @import "content-body";
 @import "report-meta";
 @import "content-footer";
