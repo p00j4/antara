@@ -3,7 +3,7 @@ var React = require("react");
 
 var Template=function(){
     return(
-        < div className = 'map' > </ div >
+        < div id = 'map' > </ div >
     );
 };
 
