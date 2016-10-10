@@ -20,7 +20,7 @@ config.params = {
 
 // params for the L.tileLayer (aka basemap)
 config.tileLayer = {
-    uri: "https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmFjaGV0YW5hIiwiYSI6ImNpc3g2cnlmZTA4NW0yeXBnMDZiNHUyMWMifQ.XCAmIR_6wdmkYDOBYrGk9Q",
+    uri: "https://api.mapbox.com/styles/v1/suchismitanaik/cit4r7vpt002j2yqrk7cx5smt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic3VjaGlzbWl0YW5haWsiLCJhIjoiY2lqMmZ5N2N5MDAwZnVna25hcjE2b2Q1eCJ9.IYx8Zoc0yNPcp7Snd7yW2A",
     params: {
         minZoom: 4,
         maxZoom: 4,
