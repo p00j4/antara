@@ -11,7 +11,7 @@ var geojson = require('../../../data/india_states.json');
 config.params = {
     center: [20.59, 78.96], //Greenpoint
     zoomControl: false,
-    zoom: 4,
+    zoom: 5,
     scrollwheel: false,
     legends: true,
     infoControl: false,
@@ -22,8 +22,8 @@ config.params = {
 config.tileLayer = {
     uri: "https://api.mapbox.com/styles/v1/suchismitanaik/cit4r7vpt002j2yqrk7cx5smt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic3VjaGlzbWl0YW5haWsiLCJhIjoiY2lqMmZ5N2N5MDAwZnVna25hcjE2b2Q1eCJ9.IYx8Zoc0yNPcp7Snd7yW2A",
     params: {
-        minZoom: 4,
-        maxZoom: 4,
+        minZoom: 5,
+        maxZoom: 20,
         attribution: "",
         id: "",
         accessToken: ""
@@ -59,7 +59,6 @@ var MapLeaflet = React.createClass(
     
         componentDidUpdate:function(prevProps, prevState) {
 
-
         },
         
         componentWillUnmount: function() {
@@ -74,62 +73,104 @@ var MapLeaflet = React.createClass(
     
         addGeoJSONLayer: function(geojson) {
             var geojsonLayer = L.geoJson(geojson, {
-                style: this.style
+                style: this.style,
+                onEachFeature: this.onEachFeature
             });
             geojsonLayer.addTo(this.map);
-            this.setState({ geojsonLayer: geojsonLayer });
+            
+            this.state.geojsonLayer = geojsonLayer;
+            // fit the map to the new geojson layer's geographic extent
+            this.zoomToFeature(geojsonLayer);
+            
         },
         
         style:function(feature) {
             return {
                 fillColor: this.getColor(feature.properties.ID_1),
-                weight: 2,
+                weight: 0,
                 opacity: 1,
-                color: 'white',
-                dashArray: '3',
+                color: 'yellow',
                 fillOpacity: 0.7
             };
         },
     
         getColor:function (d) {
-            return d == 1 ? '#800026' :
-                   d == 2 ? '#BD0026' :
-                   d == 3 ? '#E31A1C' :
-                   d == 4 ? '#FC4E2A' :
-                   d == 5 ? '#FD8D3C' :
-                   d == 6 ? '#FEB24C' :
-                   d == 7 ? '#FED976' :
-                                   d == 8 ? '#BD0026' :
-                                   d == 9 ? '#E31A1C' :
-                                   d == 10 ? '#FC4E2A' :
-                                   d == 11 ? '#FD8D3C' :
-                                   d == 12 ? '#FEB24C' :
-                                   d == 13 ? '#FED976' :
-                                   d == 14 ? '#BD0026' :
-                                   d == 15 ? '#E31A1C' :
-                                   d == 16 ? '#FC4E2A' :
-                                   d == 17 ? '#FD8D3C' :
-                                   d == 18 ? '#FEB24C' :
-                                   d == 19 ? '#FED976' :
-                                   d == 20 ? '#BD0026' :
-                                   d == 21 ? '#E31A1C' :
-                                   d == 22 ? '#FC4E2A' :
-                                   d == 23 ? '#FD8D3C' :
-                                   d == 24 ? '#FEB24C' :
-                                   d == 25 ? '#FED976' :
-                                   d == 26 ? '#BD0026' :
-                                   d == 27 ? '#E31A1C' :
-                                   d == 28 ? '#FC4E2A' :
-                                   d == 29 ? '#FD8D3C' :
-                                   d == 30 ? '#FEB24C' :
-                                   d == 31 ? '#FED976' :
-                                   d == 32 ? '#E31A1C' :
-                                   d == 33 ? '#FC4E2A' :
-                                   d == 34 ? '#FD8D3C' :
-                                   d == 35 ? '#FEB24C' :
-                                   d == 36 ? '#FED976' :
-                                   '#FFEDA0';
+            return d === 1 ? '#800026' :
+                   d === 2 ? '#BD0026' :
+                   d === 3 ? '#E31A1C' :
+                   d === 4 ? '#FC4E2A' :
+                   d === 5 ? '#FD8D3C' :
+                   d === 6 ? '#FEB24C' :
+                   d === 7 ? '#FED976' :
+                   d === 8 ? '#BD0026' :
+                   d === 9 ? '#E31A1C' :
+                   d === 10 ? '#FC4E2A' :
+                   d === 11 ? '#FD8D3C' :
+                   d === 12 ? '#FEB24C' :
+                   d === 13 ? '#FED976' :
+                   d === 14 ? '#BD0026' :
+                   d === 15 ? '#E31A1C' :
+                   d === 16 ? '#FC4E2A' :
+                   d === 17 ? '#FD8D3C' :
+                   d === 18 ? '#FEB24C' :
+                   d === 19 ? '#FED976' :
+                   d === 20 ? '#BD0026' :
+                   d === 21 ? '#E31A1C' :
+                   d === 22 ? '#FC4E2A' :
+                   d === 23 ? '#FD8D3C' :
+                   d === 24 ? '#FEB24C' :
+                   d === 25 ? '#FED976' :
+                   d === 26 ? '#BD0026' :
+                   d === 27 ? '#E31A1C' :
+                   d === 28 ? '#FC4E2A' :
+                   d === 29 ? '#FD8D3C' :
+                   d === 30 ? '#FEB24C' :
+                   d === 31 ? '#FED976' :
+                   d === 32 ? '#E31A1C' :
+                   d === 33 ? '#FC4E2A' :
+                   d === 34 ? '#FD8D3C' :
+                   d === 35 ? '#FEB24C' :
+                   d === 36 ? '#FED976' :
+                   '#FFEDA0';
         },
+                                   
+       highlightFeature: function(e) {
+           var layer = e.target;
+           
+           layer.setStyle({
+                          weight: 1,
+                          color: 'yellow',
+                          dashArray: '',
+                          fillOpacity: 0.7
+                          });
+           
+           if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+           layer.bringToFront();
+           }
+        },
+       
+       resetHighlight:function(e) {
+           this.state.geojsonLayer.resetStyle(e.target);
+       },
+                                   
+       onEachFeature:function(feature, layer) {
+          layer.on({
+                mouseover: this.highlightFeature,
+                mouseout: this.resetHighlight,
+                click: this.zoomToFeature
+           });
+       },
+       
+        zoomToFeature: function(target) {
+               // pad fitBounds() so features aren't hidden under the Filter UI element
+               var fitBoundsParams = {
+               paddingTopLeft: [200,10],
+               paddingBottomRight: [10,10]
+               };
+               // set the map's center & zoom so that it fits the geographic extent of the layer
+               this.map.fitBounds(target.getBounds(), fitBoundsParams);
+        },
+                                   
         
         init: function(id) {
             if (this.map) {
@@ -142,16 +183,20 @@ var MapLeaflet = React.createClass(
         
             // a TileLayer is used as the "basemap"
             var tileLayer = L.tileLayer(config.tileLayer.uri, config.tileLayer.params).addTo(this.map);
-        
-            // set our state to include the tile layer
-            this.state.tileLayer= tileLayer;
-            this.state.geojson=geojson;
-            
+           
+           // set our state to include the tile layer
+           this.state.tileLayer= tileLayer;
                                    
+           
+           this.state.geojson=geojson;
+           
+           
            if (this.state.geojson && this.map && !this.state.geojsonLayer) {
-               // add the geojson overlay
-               this.addGeoJSONLayer(this.state.geojson);
-          }
+           // add the geojson overlay
+           this.addGeoJSONLayer(this.state.geojson);
+           }
+           
+
         },
         render: function () {
             return MapTemplate();
