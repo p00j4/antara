@@ -11,6 +11,7 @@ var Router      = ReactRouter.Router,
 
 var DATA = require("../utils/data").DATA;
 
+var Embed = require("../components/embed.js");
 var HomePageTemplate = require("../templates/pages/home.jsx");
 
 var HomePage = React.createClass({
@@ -58,10 +59,11 @@ var HomePage = React.createClass({
 /* istanbul ignore next */
 var homePage = function (container) {
   return ReactDOM.render(
-    React.createElement(Router, {
-      history: hashHistory,
-      routes : require("../utils/routes")(HomePage)
-    }),
+    <Router history={hashHistory}>
+      <Route path="/" component={HomePage} />
+      <Route path="/embed" component={Embed} />
+      <Route path="*" component={HomePage} />
+    </Router>,
     document.getElementById(container));
 };
 
