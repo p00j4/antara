@@ -34,6 +34,7 @@
     "fuse.js": "~2.2.0",
     "history": "~1.13.1",
     "jquery": "~2.2.2",
+    "leaflet": "^0.7.0",
     "lodash": "~4.7.0",
     "react": "~0.14.8",
     "react-addons-update": "~0.14.8",
@@ -41,7 +42,8 @@
     "react-d3-tooltip": "^1.4.14",
     "react-dom": "~0.14.8",
     "react-router": "~2.0.1",
-    "react-social": "^1.4.3"
+    "react-social": "^1.4.3",
+    "react-leaflet": "^0.12.3"
   },
   "devDependencies": {
     "babel-jest": "~10.0.1",
