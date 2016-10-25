@@ -29,6 +29,7 @@
     "browserify": "~13.0.0",
     "browserify-incremental": "~3.1.1",
     "browserify-shim": "~3.8.12",
+    "chroma-js": "^1.2.1",
     "dom-to-image": "~2.4.0",
     "express": "~4.13.4",
     "fuse.js": "~2.2.0",
@@ -42,7 +43,8 @@
     "react-d3-tooltip": "^1.4.14",
     "react-dom": "~0.14.8",
     "react-leaflet": "^0.12.3",
-    "react-router": "~2.0.1"
+    "react-router": "~2.0.1",
+    "topojson": "^1.6.27"
   },
   "devDependencies": {
     "babel-jest": "~10.0.1",
