@@ -27,7 +27,7 @@ var colorScale = chroma
                 .scale(['#D5E3FF', '#003171'])
                 .domain([0,1]);
 
-var $tooltip = $('.statetooltip');
+var $tooltip = $('#statetooltip');
 // map paramaters to pass to L.map when we instantiate it
 config.params = {
     center: [20.59, 78.96], //Greenpoint
@@ -240,8 +240,36 @@ var MapLeaflet = React.createClass(
                           weight:1,
                           opacity:.5
                           });
-           $tooltip.text("hello").show();
+           var _self = this;
+           var targetlayer = layer;
+           layer.on('mouseover',function(e){
+                    _self.enterLayer(this)
+                    });
+           layer.on('mouseout',function(e){
+                    _self.leaveLayer(this)
+                    });
+                
 
+       },
+       enterLayer:function(layer){
+           var stateName = "Hello";
+           $tooltip.text(stateName).show();
+           
+           layer.bringToFront();
+           layer.setStyle({
+                         weight:2,
+                         opacity: 1
+                         });
+       },
+       leaveLayer:function(layer){
+           $tooltip.hide();
+           
+           layer.bringToBack();
+           layer.setStyle({
+                         weight:1,
+                         opacity:.5
+                         });
+       
        },
         render: function () {
             return MapTemplate();
