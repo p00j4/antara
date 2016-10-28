@@ -27,39 +27,15 @@ var colorScale = chroma
                 .scale(['#D5E3FF', '#003171'])
                 .domain([0,1]);
 
-// map paramaters to pass to L.map when we instantiate it
-config.params = {
-    center: [20.59, 78.96], //Greenpoint
-    zoomControl: false,
-    zoom: 4.4,
-    scrollwheel: false,
-    legends: true,
-    infoControl: false,
-    attributionControl: true
-};
-
-// params for the L.tileLayer (aka basemap)
-config.tileLayer = {
-    uri: "https://api.mapbox.com/styles/v1/suchismitanaik/cit4r7vpt002j2yqrk7cx5smt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic3VjaGlzbWl0YW5haWsiLCJhIjoiY2lqMmZ5N2N5MDAwZnVna25hcjE2b2Q1eCJ9.IYx8Zoc0yNPcp7Snd7yW2A",
-    params: {
-        minZoom: 4.4,
-        maxZoom: 20,
-        attribution: "",
-        id: "",
-        accessToken: ""
-    }
-};
-
-
 var MapTemplate = require("../templates/components/map.jsx");
 
 var MapLeaflet = React.createClass(
     {
         getInitialState: function() {
             return {
-                tileLayer : null,
                 topoLayer: null,
-                topojson: null
+                topojson: null,
+               statetooltip:{"name":""}
             };
         },
     
@@ -129,6 +105,9 @@ var MapLeaflet = React.createClass(
 
        },
        enterLayer:function(layer){
+           this.setState({
+                         statetooltip:{"name":layer.feature.properties.NAME_1}
+                         });
            
            layer.bringToFront();
            layer.setStyle({
@@ -137,7 +116,9 @@ var MapLeaflet = React.createClass(
                          });
        },
        leaveLayer:function(layer){
-           
+           this.setState({
+                         statetooltip:{"name":""}
+                         });
            layer.bringToBack();
            layer.setStyle({
                          weight:1,
