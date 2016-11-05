@@ -12,7 +12,10 @@ var SideNavigationTemplate = function (self) {
     return (
       <div className="bg-primary side-nav">
         <div className="project-info">
-          <div className="project-title">CBGA Story Generator</div>
+          <div className="project-title">
+            <div>CBGA Story Generator</div>
+            <div className="glyphicon glyphicon-remove" onClick={(event) => self.toggleSideNavigation()}></div>
+          </div>
           <div className="project-description">
             Nam dapibus nisl vitae elit fringilla rutrum. Aenean sollicitudin, erat a elementum rutrum, neque sem
             pretium metus, quis mollis
@@ -20,8 +23,7 @@ var SideNavigationTemplate = function (self) {
         </div>
         <IndicatorsSelector location={self.props.location}
                             params={self.props.params}
-                            indicators={self.state.indicators}
-                            onClick={(event) => self.toggleSideNavigation()} />
+                            indicators={self.state.indicators} />
 
         <div className="credits">
           <div className="credits-info">
@@ -39,7 +41,7 @@ var SideNavigationTemplate = function (self) {
   }
   return (
     <div className="side-nav-menu-icon" onClick={(event) => self.toggleSideNavigation()}>
-      <span className="glyphicon glyphicon-menu-hamburger"></span>
+      <span className="glyphicon glyphicon-menu-right"></span>
     </div>
   );
 };

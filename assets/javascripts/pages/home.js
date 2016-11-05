@@ -11,7 +11,7 @@ var Router      = ReactRouter.Router,
 
 var DATA = require("../utils/data").DATA;
 
-var Embed = require("../components/embed.js");
+var Embed = require("./embed.js");
 var HomePageTemplate = require("../templates/pages/home.jsx");
 
 var HomePage = React.createClass({
@@ -41,7 +41,7 @@ var HomePage = React.createClass({
     this.setState({
       states            : states,
       indicators        : indicators,
-      showSideNavigation: _.isEmpty(indicators)
+      showSideNavigation: true
     });
   },
 

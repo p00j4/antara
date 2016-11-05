@@ -3,7 +3,7 @@
 var React = require("react"),
     _     = require("lodash");
 var DATA = require("../utils/data").DATA;
-var Report             = require("./report");
+var Report             = require("../components/report");
 
 var Embed = React.createClass({
   getInitialState: function () {
@@ -33,7 +33,6 @@ var Embed = React.createClass({
     });
   },
   render: function(){
-    var url = window.location.toString();
     return (
       <Report location={this.props.location}
                   params={this.props.params}

@@ -54,6 +54,10 @@
       display: flex;
       .report-footer-item {
         cursor: pointer;
+        .report-footer-item-share {
+          min-width: auto;
+          padding: .3em;
+        }
       }
     }
   }

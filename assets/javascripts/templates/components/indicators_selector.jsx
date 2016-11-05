@@ -42,7 +42,7 @@ var Template = function (self) {
                onChange={(event) => self.onIndicatorSearch(event.target.value)} />
       </div>
       <div className="indicator-title">
-        <div className="indicator-title-text">CATEGORY</div>
+        <div className="indicator-title-text">indicators</div>
         <div className="clear-all"></div>
       </div>
       {listOfIndicator(self)}

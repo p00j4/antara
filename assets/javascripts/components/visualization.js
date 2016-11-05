@@ -9,8 +9,8 @@ var VisualizationTemplate = require("../templates/components/visualization.jsx")
 var Visualization = React.createClass({
 
   getInitialState: function () {
-    var width = $(".report").width();
-    var height = $(".report").height();
+    var width = $(".mk-viz").width();
+    var height = $(".mk-viz").height();
     return {
       selectedStates   : [],
       selectedIndicator: {},
@@ -19,8 +19,8 @@ var Visualization = React.createClass({
     };
   },
   handleResize: function(e) {
-    var width = $(".report").width();
-    var height = $(".report").height();
+    var width = $(".mk-viz").width();
+    var height = $(".mk-viz").height();
     this.setState({
       containerWidth: width,
       containerHeight: height

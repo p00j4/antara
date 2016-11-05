@@ -75,7 +75,7 @@ var MapLeaflet = React.createClass(
            var topoLayer = new L.TopoJSON();
 
            
-           this.map.setView([20.59, 78.96], 4.4);
+           this.map.setView([20.59, 78.96], 4);
            topoLayer.addData(this.state.topojson);
            topoLayer.addTo(this.map);
            topoLayer.eachLayer(this.handleLayer);
