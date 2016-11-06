@@ -43,11 +43,8 @@
     "react-d3-tooltip": "^1.4.14",
     "react-dom": "~0.14.8",
     "react-router": "~2.0.1",
-<<<<<<< HEAD
     "react-social": "^1.4.3",
-=======
     "react-share": "^1.10.1",
->>>>>>> 1842fcb96a80d5d7d6ae816d5f14b235274e493c
     "react-leaflet": "^0.12.3",
     "topojson": "^1.6.27"
   },
