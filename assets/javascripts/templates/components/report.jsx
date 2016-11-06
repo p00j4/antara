@@ -3,11 +3,11 @@
 var React    = require("react"),
     ReactDOM = require("react-dom"),
     _        = require("lodash"),
-    $          = require("jquery"),
-    ReactSocial = require("react-social");
+    $          = require("jquery");
 
 var Visualization = require("../../components/visualization");
 var MapLeaflet = require("../../components/map");
+var ReportFooter = require("../../components/report_footer");
 
 var Template = function (self) {
   
@@ -41,36 +41,11 @@ var Template = function (self) {
         <div className="mk-viz">
             <MapLeaflet indicator={self.state.selectedIndicator}/>
         </div>
-  
-        <div className="report-footer">
-          <div className="report-footer-left">
-            <div className="report-footer-item">
-              <span className="text-italic">source: </span>
-              <a href="javascript: void(0);">link</a>
-            </div>
-          </div>
-          <div className="report-footer-right">
-            <div className="report-footer-item" onClick={(event) => self.onDownload()}>
-              Download&nbsp;|&nbsp;
-            </div>
-            <div className="report-footer-item">
-              Embed&nbsp;|&nbsp;
-            </div>
-            <div className="report-footer-item">
-              Share
-            </div>
-          </div>
-      </div>
+        
+        <ReportFooter />
       </div>
     );
   }
-  var url = window.location.href;
-  
-  var tempArray = url.split("#");
-  var embedString = "#/embed";
-  var embedUrl = tempArray[0] + embedString + tempArray[1];
-
-  var TwitterButton = ReactSocial.TwitterButton;
   return (
     <div className="report">
       <div className="report-header">
@@ -91,39 +66,7 @@ var Template = function (self) {
       <div className="mk-viz">
         <Visualization config={self.state.config} />
       </div>
-
-      <div className="report-footer">
-        <div className="report-footer-left">
-          <div className="report-footer-item">
-            <span className="text-italic">source: </span>
-            <a href="javascript: void(0);">link</a>
-          </div>
-        </div>
-        <div className="report-footer-right">
-          <div className="report-footer-item" onClick={(event) => self.onDownload()}>
-            Download&nbsp;|&nbsp;
-          </div>
-          <div className="report-footer-item" data-toggle="modal" data-target="#embed">
-            Embed&nbsp;|&nbsp;
-          </div>
-          <div className="report-footer-item">
-            <TwitterButton url={url}>tweet</TwitterButton>
-          </div>
-        </div>
-      </div>
-      <div className="modal fade" id="embed" tabindex="-1" role="dialog" aria-labelledby="embed">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title" id="embedLabel">Embed Url</h4>
-            </div>
-            <div className="modal-body">
-              <textarea className="embed-url" value={embedUrl} autofocus></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ReportFooter />
     </div>
   );
 };

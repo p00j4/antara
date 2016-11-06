@@ -20,6 +20,10 @@
   .project-title{
     font-weight: 600;
     font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
   }
   .project-description {
     border-radius: .3em;
@@ -59,6 +63,7 @@
     padding: .2em .5em;
     font-size: 1.2em;
     color: #4a4a4a;
+    text-transform: uppercase;
     .indicator-title-text {
       font-size: 1em;
       color: #4a4a4a;

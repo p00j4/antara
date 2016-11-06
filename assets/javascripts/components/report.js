@@ -48,20 +48,6 @@ var Report = React.createClass({
     });
   },
 
-  onDownload: function () {
-    var report = document.querySelector("#main-container > div > div.content > div.content-body > div.report");
-    DOMToImage.toSvg(report, {
-      "style": {
-        "font-family": "PT Sans"
-      }
-    }).then(function (dataUrl) {
-      var link = document.createElement('a');
-        link.download = 'my-image-name.jpeg';
-        link.href = dataUrl;
-        link.click();
-    }).catch(console.error);
-  },
-
   getSelectedStatesSlug: function (props) {
     return _.chain(props)
       .get("location.query.states", "")

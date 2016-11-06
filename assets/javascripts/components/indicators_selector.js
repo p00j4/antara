@@ -49,7 +49,6 @@ var IndicatorsSelector = React.createClass({
         selectedIndicator: indicator
       });
     }
-    this.props.onClick();
   },
 
   render: function () {

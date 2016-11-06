@@ -18,8 +18,8 @@ var graph = function (self) {
     /* jshint ignore:start */
     /* jscs ignore:start */
     <BarGroupChart
-      width={900}
-      height={400}
+      width={self.state.containerWidth}
+      height={self.state.containerHeight}
       data={data}
       chartSeries={chartSeries}
       x={x}
