@@ -5,6 +5,7 @@ var React      = require("react"),
     _          = require("lodash"),
     DOMToImage = require("dom-to-image");
 
+var DATA = JSON.parse(JSON.stringify(require("../utils/data").DATA));
 var COLORS = require("../utils/data").COLORS;
 var wrappedColors = _(COLORS);
 
@@ -161,11 +162,11 @@ var Report = React.createClass({
   },
 
   getBudgets: function (selectedStates, selectedIndicator) {
-    var tempDATA = JSON.parse(JSON.stringify(require("../utils/data").DATA));
+    
     if (_.isEmpty(selectedStates) || _.isEmpty(selectedIndicator)) {
       return [];
     }
-    return _.chain(tempDATA)
+    return _.chain(DATA)
       .filter(function (state) {
         return _.includes(_.map(selectedStates, function (item) {
           return item.slug;
@@ -183,7 +184,6 @@ var Report = React.createClass({
       })
       .valueOf();
   },
-
   render: function () {
     return ReportTemplate(this);
   }

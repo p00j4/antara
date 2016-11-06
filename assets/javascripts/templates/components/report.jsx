@@ -39,7 +39,7 @@ var Template = function (self) {
           </div>
         </div>
         <div className="mk-viz">
-          <MapLeaflet/>
+            <MapLeaflet indicator={self.state.selectedIndicator}/>
         </div>
   
         <div className="report-footer">

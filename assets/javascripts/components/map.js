@@ -7,9 +7,22 @@ var React      = require("react"),
     chroma     =require("chroma-js");
     
 var config = {};
-
+var DATA = require("../utils/data").DATA;
+var yearsData = [{"from"   :"2012",
+             "to"      :"2013",
+             "duration":"2012-13"},
+             {"from"   :"2013",
+             "to"      :"2014",
+             "duration":"2013-14"},
+             {"from"   :"2014",
+             "to"      :"2015",
+             "duration":"2014-15"},
+             {"from"   :"2015",
+             "to"      :"2016",
+             "duration":"2015-16"}]
 // using webpack json loader we can import our topojson file like this
 var topodata = require('../../../data/india_states.topo.json');
+
 L.TopoJSON = L.GeoJSON.extend({
     addData: function(jsonData) {
                   if (jsonData.type === "Topology") {
@@ -33,9 +46,12 @@ var MapLeaflet = React.createClass(
     {
         getInitialState: function() {
             return {
-                topoLayer: null,
-                topojson: null,
-               statetooltip:{"name":""}
+                years         : yearsData,
+                allocations   : {},
+                topoLayer     : null,
+                topojson      : null,
+                statetooltip  :{},
+                duration      :{}
             };
         },
     
@@ -61,6 +77,7 @@ var MapLeaflet = React.createClass(
             this.map.remove();
         },
         
+                                   
         getID: function() {
             // get the "id" attribute of our component's DOM node
             return ReactDOM.findDOMNode(this);
@@ -70,20 +87,16 @@ var MapLeaflet = React.createClass(
                 return;
             }
            this.state.topojson = topodata;
-
-           this.map = L.map(id,{maxZoom:10,minZoom:3});
+           this.map = L.map(id,{maxZoom:4.4,minZoom:4.4});
            var topoLayer = new L.TopoJSON();
-
-           
            this.map.setView([20.59, 78.96], 4.4);
            topoLayer.addData(this.state.topojson);
            topoLayer.addTo(this.map);
            topoLayer.eachLayer(this.handleLayer);
-
         },
        handleLayer:function(layer){
            var randomValue = Math.random(),
-               fillColor = colorScale(randomValue).hex();
+           fillColor = colorScale(randomValue).hex();
            
            layer.setStyle({
                           fillColor : fillColor,
@@ -101,14 +114,30 @@ var MapLeaflet = React.createClass(
            layer.on('mouseout',function(e){
                     _self.leaveLayer(this)
                     });
-                
-
+       },
+       getStateIndicatorValue:function(state,indicator,years){
+           var stateoutput = _.chain(DATA)
+           .find(function(item){return item.name==state })
+           .valueOf();
+           if(_.isEmpty(stateoutput)){
+            return;
+           }
+           var indicatordetails = _.chain(stateoutput.indicators)
+           .find(function(item){return item.slug==indicator})
+           .valueOf();
+           var indTimeFrame = _.chain(indicatordetails.budgets)
+           .find(function(item){return (item.years.from==years.from && item.years.to == years.to)})
+           .valueOf();
+           return indTimeFrame.allocations[0];
        },
        enterLayer:function(layer){
+           var getState = layer.feature.properties.NAME_1;
+           var getYears = this.state.years[0];
            this.setState({
-                         statetooltip:{"name":layer.feature.properties.NAME_1}
+                         statetooltip:{"name":getState},
+                         duration:{"duration":getYears.duration},
+                         allocations:this.getStateIndicatorValue(getState,this.props.indicator.slug,getYears)
                          });
-           
            layer.bringToFront();
            layer.setStyle({
                          weight:2,
@@ -116,15 +145,25 @@ var MapLeaflet = React.createClass(
                          });
        },
        leaveLayer:function(layer){
-           this.setState({
-                         statetooltip:{"name":""}
-                         });
+//           this.setState({
+//                         statetooltip:{"name":""},
+//                         allocations:[]
+//                         });
            layer.bringToBack();
            layer.setStyle({
                          weight:1,
                          opacity:.5
                          });
        
+       },
+       handleClick(yearchosen){
+           var getState = this.state.statetooltip.name;
+           var getYears = this.state.years[yearchosen.index];
+           this.setState({
+                         statetooltip:{"name":getState},
+                         duration:{"duration":getYears.duration},
+                         allocations:this.getStateIndicatorValue(getState,this.props.indicator.slug,getYears)
+                         });
        },
         render: function () {
             return MapTemplate(this);

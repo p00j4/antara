@@ -13,21 +13,61 @@
 background:white;
 }
 .leaflet-container {
-  height: 500px;
-  width: 100%;
+    width: 583px;
+    height: 634px;
 }
 .statetooltip{
 position: absolute;
-top:2em;
-right:1em;
+top:40em;
+right:2em;
+height:10em;
+width:20em;
 z-index:6;
-background:rgba(0,0,0,.75);
-color:white;
-padding:.5em .75em;
+color:#31708f;
 font-size:.85em;
 display:block;
 }
-
+.tcontainer{
+position: absolute;
+top: 5em;
+right: 2em;
+height: 10em;
+z-index: 6;
+color: #31708f;
+font-size: .85em;
+display: block;
+}
+.timeline{
+list-style-type: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.tparts{
+width: 60px;
+display: inline;
+}
+.step{
+display: block;
+margin: 0 auto;
+z-index:1;
+position: absolute;
+top:10px;
+}
+.inner {
+margin-top: 20px;
+border-bottom: 2px solid #C3C3C3;
+position: relative;
+}
+.outer{
+float:right;
+width:60%;
+}
+.tlabel{
+font-size: 12px;
+display: block;
+padding-top: 25px;
+}
 @import "content-body";
 @import "report-meta";
 @import "content-footer";
