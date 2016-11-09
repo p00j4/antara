@@ -1,4 +1,5 @@
-var React      = require("react");
+var React      = require("react"),
+    DOMToImage = require("dom-to-image");
 
 var ReportFooterTemplate = require("../templates/components/report_footer.jsx");
 
@@ -6,41 +7,36 @@ var ReportFooter = React.createClass({
 
   onDownload: function () {
     var report = document.querySelector("#main-container > div > div.content > div.content-body > div.report");
-    // DOMToImage.toSvg(report, {
-    //   "style": {
-    //     "font-family": "PT Sans"
-    //   }
-    // }).then(function (dataUrl) {
-    //   var uri = window.location.origin+"/#/download?dataurl="+dataUrl;
-    //   var link = document.createElement('a');
-    //   link.download = 'my-image-name.jpeg';
-    //   link.href = uri;
-    //   link.target = "_blank";
-    //   link.click();
-    //   var win = window.open(uri,"_blank");
-    //   win.focus();
-    // }).catch(console.error);
+    var saveReport = function(blob,name){
+      var url = URL.createObjectURL(blob);
 
+      // Test for download link support
+      if( "download" in document.createElement('a') ){
+
+        var a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.setAttribute('download', name);
+
+        // Create Click event
+        var clickEvent = document.createEvent ("MouseEvent");
+        clickEvent.initMouseEvent ("click", true, true, window, 0, 
+          clickEvent.screenX, clickEvent.screenY, clickEvent.clientX, clickEvent.clientY, 
+          clickEvent.ctrlKey, clickEvent.altKey, clickEvent.shiftKey, clickEvent.metaKey, 
+          0, null);
+
+        // dispatch click event to simulate download
+        a.dispatchEvent (clickEvent);
+
+      }
+      else{
+        // fallover, open resource in new tab.
+        window.open(url, '_blank', '');
+      }
+    };
     DOMToImage.toBlob(report)
-    .then(function(blob){
-        var callback = function(blob) {
-          var a = document.createElement('a');
-          a.download = 'my-image-name.jpeg';
-          // the string representation of the object URL will be small enough to workaround the browser's limitations
-          a.href = URL.createObjectURL(blob);
-          // you must revoke the object URL, 
-          //   but since we can't know when the download occured, we have to attach it on the click handler..
-          a.onclick = function() {
-            // ..and to wait a frame
-            requestAnimationFrame(function() {
-              URL.revokeObjectURL(a.href);
-            });
-            a.removeAttribute('href')
-          };
-          a.click();
-        };
-        callback(blob);
-    })
+    .then(function (blob) {
+        saveReport(blob, 'report.png');
+    });
   },
 
   render: function () {
