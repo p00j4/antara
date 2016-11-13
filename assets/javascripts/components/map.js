@@ -4,8 +4,9 @@ var React      = require("react"),
     L          = require("leaflet"),
     topojson   = require("topojson"),
     $          = require("jquery"),
-    chroma     =require("chroma-js");
-    
+    chroma     =require("chroma-js"),
+    _          =require("lodash");
+
 var config = {};
 var DATA = require("../utils/data").DATA;
 var yearsData = [{"from"   :"2012",
@@ -19,9 +20,9 @@ var yearsData = [{"from"   :"2012",
              "duration":"2014-15"},
              {"from"   :"2015",
              "to"      :"2016",
-             "duration":"2015-16"}]
+                 "duration":"2015-16"}];
 // using webpack json loader we can import our topojson file like this
-var topodata = require('../../../data/india_states.topo.json');
+var topodata = require("../../../data/india_states.topo.json");
 
 L.TopoJSON = L.GeoJSON.extend({
     addData: function(jsonData) {
@@ -37,7 +38,7 @@ L.TopoJSON = L.GeoJSON.extend({
                 }
             });
 var colorScale = chroma
-                .scale(['#D5E3FF', '#003171'])
+                .scale(["#D5E3FF", "#003171"])
                 .domain([0,1]);
 
 var MapTemplate = require("../templates/components/map.jsx");
@@ -101,33 +102,33 @@ var MapLeaflet = React.createClass(
            layer.setStyle({
                           fillColor : fillColor,
                           fillOpacity: 1,
-                          color:'#555',
+                          color:"#555",
                           weight:1,
-                          opacity:.5
+                          opacity:0.5
                           });
            var _self = this;
            
            var targetlayer = layer;
-           layer.on('mouseover',function(e){
-                    _self.enterLayer(this)
+           layer.on("mouseover",function(e){
+                    _self.enterLayer(this);
                     });
-           layer.on('mouseout',function(e){
-                    _self.leaveLayer(this)
+           layer.on("mouseout",function(e){
+                    _self.leaveLayer(this);
                     });
        },
        getStateIndicatorValue:function(state,indicator,years){
            var stateoutput = _.chain(DATA)
-           .find(function(item){return item.name==state })
-           .valueOf();
+                   .find(function(item){return item.name===state; })
+                   .valueOf();
            if(_.isEmpty(stateoutput)){
             return;
            }
            var indicatordetails = _.chain(stateoutput.indicators)
-           .find(function(item){return item.slug==indicator})
-           .valueOf();
+                   .find(function(item){return item.slug===indicator;})
+                   .valueOf();
            var indTimeFrame = _.chain(indicatordetails.budgets)
-           .find(function(item){return (item.years.from==years.from && item.years.to == years.to)})
-           .valueOf();
+                   .find(function(item){return (item.years.from===years.from && item.years.to === years.to);})
+                   .valueOf();
            return indTimeFrame.allocations[0];
        },
        enterLayer:function(layer){
@@ -152,7 +153,7 @@ var MapLeaflet = React.createClass(
            layer.bringToBack();
            layer.setStyle({
                          weight:1,
-                         opacity:.5
+                         opacity:0.5
                          });
        
        },
