@@ -2,8 +2,7 @@
 
 var React      = require("react"),
     ReactDOM   = require("react-dom"),
-    _          = require("lodash"),
-    DOMToImage = require("dom-to-image");
+    _          = require("lodash");
 
 var DATA = JSON.parse(JSON.stringify(require("../utils/data").DATA));
 var COLORS = require("../utils/data").COLORS;
