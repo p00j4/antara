@@ -38,8 +38,7 @@ L.TopoJSON = L.GeoJSON.extend({
                 }
             });
 var colorScale = chroma
-                .scale(["#D5E3FF", "#003171"])
-                .domain([0,1]);
+.scale(["#D5E3FF", "#003171"]);
 
 var MapTemplate = require("../templates/components/map.jsx");
 
