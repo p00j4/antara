@@ -48,11 +48,12 @@ var MapLeaflet = React.createClass(
         getInitialState: function() {
             return {
                 years         : yearsData,
+                yearchosen    : {"yearchosen":0},
                 allocations   : {},
                 topoLayer     : null,
                 topojson      : null,
                 statetooltip  :{},
-                duration      :{}
+                duration      :{"duration":yearsData[0].duration}
             };
         },
     
@@ -133,10 +134,9 @@ var MapLeaflet = React.createClass(
        },
        enterLayer:function(layer){
            var getState = layer.feature.properties.NAME_1;
-           var getYears = this.state.years[0];
+           var getYears = this.state.years[this.state.yearchosen.yearchosen];
            this.setState({
                          statetooltip:{"name":getState},
-                         duration:{"duration":getYears.duration},
                          allocations:this.getStateIndicatorValue(getState,this.props.indicator.slug,getYears)
                          });
            layer.bringToFront();
@@ -146,10 +146,6 @@ var MapLeaflet = React.createClass(
                          });
        },
        leaveLayer:function(layer){
-//           this.setState({
-//                         statetooltip:{"name":""},
-//                         allocations:[]
-//                         });
            layer.bringToBack();
            layer.setStyle({
                          weight:1,
@@ -157,9 +153,13 @@ var MapLeaflet = React.createClass(
                          });
        
        },
-       handleClick(yearchosen){
+       handleClick(yearchosenvalue){
+           this.setState({
+                  duration:{"duration":this.state.years[yearchosenvalue]},
+                  yearchosen:{"yearchosen":yearchosenvalue}
+             });
            var getState = this.state.statetooltip.name;
-           var getYears = this.state.years[yearchosen.index];
+           var getYears = this.state.years[this.state.yearchosen.yearchosen];
            this.setState({
                          statetooltip:{"name":getState},
                          duration:{"duration":getYears.duration},

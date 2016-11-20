@@ -16,9 +16,55 @@ var Template=function(self){
         <div className="panel-body">
             <span>{props.statetooltip}</span>
             <br></br>
-            <span>{props.allocations.amount.length >0 && props.allocations.amount}</span>
+            <AllocationDetails allocations={props.allocations}/>
         </div>
       )
+    };
+    var AllocationDetails=function(props){
+        if(_.isEmpty(props.allocations)){
+            return (
+                <span>Data unavailable</span>
+            )
+        }
+        return (
+            <span>{props.allocations.amount.length >0 && props.allocations.amount}</span>
+        )
+    };
+
+    var Timeline = function(props){
+    return (
+        <ol className="timeline timeline--summary">
+            {props.years.map(function(item,index){
+                return (
+                    <li key={item.duration} className={"timeline__step " + (props.duration.duration==item.duration ? 'done' : '')} onClick={(event) => timeChosen(event)}>
+                        <input className="timeline__step-radio" type="radio" name="radioset"/>
+                        <span className="timeline__step-title">{item.duration}</span>
+                        <i className="timeline__step-marker">1</i>
+                    </li>
+                );
+            })}
+        </ol>
+        );
+    };
+    var LegendStep = function(props){
+        var legendStep = {
+            backgroundColor: props.bgColor
+        };
+        return (
+            <li><span style={legendStep}></span>{props.children}</li>
+        );
+    };
+
+    var timeChosen = function(key){
+        key.currentTarget.getElementsByTagName("input")[0].checked = true
+        var items = key.currentTarget.parentElement.getElementsByTagName("li");
+        var i = 0;
+        for(i=0;i<items.length;i++){
+            var item = items[i];
+            if(item.getElementsByTagName("input")[0].checked){
+                self.handleClick(i);
+            }
+        }
     };
 
     return (
@@ -28,19 +74,18 @@ var Template=function(self){
             <StateToolTip statetooltip={self.state.statetooltip.name} allocations={self.state.allocations}></StateToolTip>
         </div>
         <div className="tcontainer">
-            <ul className="timeline">
-                {self.state.years.map(function(item,index){
-                return (
-                    <li className="tparts">
-                        <div className="inner"></div>
-                        <div className="outer">
-                            <input className="step" type="radio" name="radioset"  checked={self.state.duration.duration === item.duration} value={index} onChange={(event) => self.handleClick({index})}/>
-                        </div>
-                        <label className="tlabel">{item.duration}</label>
-                    </li>
-                );
-                })}
-            </ul>
+            <Timeline years={self.state.years} duration={self.state.duration}/>
+        </div>
+        <div className="legendcontainer">
+           <div className='legend-scale'>
+              <ul className='legend-labels'>
+                <LegendStep bgColor='#F1EEF6'>0 - 20%</LegendStep>
+                <LegendStep bgColor='#BDC9E1'>40%</LegendStep>
+                <LegendStep bgColor='#74A9CF'>60%</LegendStep>
+                <LegendStep bgColor='#2B8CBE'>80%</LegendStep>
+                <LegendStep bgColor='#045A8D'>100%</LegendStep>
+             </ul>
+          </div>
         </div>
     </div>
     )
