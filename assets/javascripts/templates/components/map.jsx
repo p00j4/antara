@@ -12,12 +12,11 @@ var Template=function(self){
     }
     return(
        <div>
-        <div className="statetoolPanelHeading">{props.statetooltip}</div>
+            <div className="statetoolPanelHeading">{props.statetooltip}</div>
             <div>
                 <AllocationDetails allocations={props.allocations}/>
             </div>
         </div>
-    </div>
       )
 
     };
