@@ -7,18 +7,19 @@ var Template=function(self){
     var StateToolTip = function(props){
     if (_.isEmpty(props.statetooltip)){
       return(
-        <div className="panel-body">
-            <span>Please select a state from the map</span>
-        </div>
+        <div className="statetoolPanelHeading">Please select a state from the map</div>
       )
     }
     return(
-        <div className="panel-body">
-            <span>{props.statetooltip}</span>
-            <br></br>
-            <AllocationDetails allocations={props.allocations}/>
+       <div>
+        <div className="statetoolPanelHeading">{props.statetooltip}</div>
+            <div>
+                <AllocationDetails allocations={props.allocations}/>
+            </div>
         </div>
+    </div>
       )
+
     };
     var AllocationDetails=function(props){
         if(_.isEmpty(props.allocations)){
@@ -69,8 +70,7 @@ var Template=function(self){
 
     return (
      <div id = 'map'>
-        <div className="statetooltip panel panel-info">
-            <div className="panel-heading">{self.props.indicator.name}</div>
+        <div className="statetooltip">
             <StateToolTip statetooltip={self.state.statetooltip.name} allocations={self.state.allocations}></StateToolTip>
         </div>
         <div className="tcontainer">

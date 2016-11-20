@@ -87,13 +87,21 @@ var MapLeaflet = React.createClass(
             if (this.map) {
                 return;
             }
+                                   
            this.state.topojson = topodata;
-           this.map = L.map(id,{maxZoom:4.4,minZoom:4.4});
+           this.map = L.map(id,{maxZoom:6,minZoom:4});
+           this.map.setView([23.59, 81.96], 5);
+                                   
+           var tileLayer = L.tileLayer('https://api.mapbox.com/styles/v1/rachetana/ciu45yngf00aj2ho8vvno6kum/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmFjaGV0YW5hIiwiYSI6ImNpc3g2cnlmZTA4NW0yeXBnMDZiNHUyMWMifQ.XCAmIR_6wdmkYDOBYrGk9Q');
+           tileLayer.addTo(this.map);
+           
            var topoLayer = new L.TopoJSON();
-           this.map.setView([20.59, 78.96], 4.4);
            topoLayer.addData(this.state.topojson);
            topoLayer.addTo(this.map);
            topoLayer.eachLayer(this.handleLayer);
+
+
+                                   
         },
        handleLayer:function(layer){
            var randomValue = Math.random(),
@@ -101,7 +109,7 @@ var MapLeaflet = React.createClass(
            
            layer.setStyle({
                           fillColor : fillColor,
-                          fillOpacity: 1,
+                          fillOpacity: 0.75,
                           color:"#555",
                           weight:1,
                           opacity:0.5
