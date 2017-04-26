@@ -5,7 +5,7 @@
 
 ## Development Setup:
 * **Clone this repository.** - `git clone https://github.com/cbgaindia/story-generator.git` or [download the zip](https://github.com/cbgaindia/story-generator.git)
-* **Make sure you're in the directory you just created.** - `cd story-generator`
+* **Change to the repo directory** - `cd story-generator`
 * **Install Node Packages.** - `npm install`
 * **Run the app.** - `npm start -s`
 * **Generate Build** - `npm run build`
