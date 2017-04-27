@@ -30,7 +30,7 @@ class GraphComponent extends React.Component {
       indicatorUnit:null,
       notesText:null
     };
-    this.logChange=this.logChange.bind(this);
+
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.getStateFigures = this.getStateFigures.bind(this);
     this.updateNotes = this.updateNotes.bind(this);
@@ -48,14 +48,16 @@ class GraphComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
+    console.log("Mount" , this.state.value)
+    
     if (this.state.selectedAttr != this.props.attrType){
       this.setState({selectedAttr:this.props.attrType});
     }
     if(this.state.indicatorUnit != this.props.data.unit){
       this.setState({indicatorUnit:this.props.data.unit});
     }
-		if(prevState.value != this.state.value || prevState.selectedAttr != this.state.selectedAttr || prevProps.data !=this.props.data ){
-			let stateArray = this.state.value.split(",");
+    if(prevState.value != this.state.value || prevState.selectedAttr != this.state.selectedAttr || prevProps.data !=this.props.data ){
+      let stateArray = this.state.value.split(",");
 			let selectedFigures = [];
 
 			for(let selectedState in stateArray){
@@ -98,7 +100,6 @@ class GraphComponent extends React.Component {
 	}
 
   updateNotes(){
-
       let self = this;
       let description = expenditure_metadata.find(function(record, index){
         if(record.slugSector == self.props.selectedSector && record.slugIndicator == self.props.data.slugIndicator){
@@ -135,18 +136,18 @@ render (){
     let accessthis =this;
     const attributeKey = {"BE":" Budget Estimates", "RE":"Revised Estimates", "A":"Actuals"};
     const color = ['#26393D','#40627C','#D0A825','#D64700','#002A4A','#A7A37E','#B9121B','#1B1E26'].reverse();
-
+    
     return(
       <div className="card-container">
-      <div className="row-fluid selected-params">
-        <h3 className="indicator-title">
+        <div className="row-fluid selected-params">
+          <h3 className="indicator-title">
             {this.props.selectedIndicator}
-        </h3>
+          </h3>
         <div className="row row-sub-text">
         <div className="col-lg-6 sub-text">
-        <h5>
-         {attributeKey[this.state.selectedAttr]}
-        </h5>      
+          <h5>
+            {attributeKey[this.state.selectedAttr]}
+          </h5>      
         </div>
         <div className="col-lg-6 sub-text">
           <h5 className="figures-unit">Figures in {this.state.indicatorUnit}</h5>
@@ -154,14 +155,13 @@ render (){
         </div>
       </div>  
       <div className="container-fluid graph-container">
-      <div className="row select-container">
-        <div className="col-lg-12 state-select">
-          <Select multi={true} simpleValue value={this.state.value} placeholder="Select a State" options={this.state.stateOptions} onChange={this.handleSelectChange} />
+        <div className="row select-container">
+          <div className="col-lg-12 state-select">
+            <Select multi={true} simpleValue value={this.state.value} placeholder="Select a State" options={this.state.stateOptions} onChange={this.handleSelectChange} />
+          </div>
         </div>
-      </div>
-
-      {this.state.value[0] != null && this.state.selectedFigures !=null ? 
-        (<div className="row legend-row">
+        {this.state.value[0] != null && this.state.selectedFigures !=null ? 
+          (<div className="row legend-row">
             <DiscreteColorLegend
               orientation="horizontal"
               items={this.state.selectedFigures.map(function(value,index){
@@ -169,22 +169,22 @@ render (){
                 })
               }
             />
-        </div>)
-        :
-        (<div></div>)
-      }
-      <div className="row graph-area">
-        {this.state.value[0] != null && this.state.selectedFigures !=null? (
-          <div id="chart">
-            <XYPlot
-              width={600}
-              height={300} 
-              xType="ordinal"
-              margin={{top:20, left:40, right:0, bottom:40}}>
-            <HorizontalGridLines />
-            
-            <VerticalGridLines />
-            {this.state.selectedFigures.map(function(state, index){ 
+          </div>)
+          :
+          (<div></div>)
+        }
+        <div className="row graph-area">
+          {this.state.value[0] != null && this.state.selectedFigures !=null? (
+            <div id="chart">
+              <XYPlot
+                width={600}
+                height={300} 
+                xType="ordinal"
+                margin={{top:20, left:40, right:0, bottom:40}}>
+              <HorizontalGridLines />
+              
+              <VerticalGridLines />
+              {this.state.selectedFigures.map(function(state, index){ 
               return(
                 <VerticalBarSeries
                   color={color[index]}
@@ -197,9 +197,7 @@ render (){
             } 
            
             <XAxis title="Fiscal Years" />
-            
             <YAxis title ="Indicator"/>
-            
             {this.state.hoverValue ? 
             (<Hint value={this.state.hoverValue}>
                 <div className="rv-hint__content">
@@ -219,8 +217,8 @@ render (){
             }
           </XYPlot>
         </div>
-        ) :
-        (<div className="col-lg-12 select-placeholder">
+        ):
+          (<div className="col-lg-12 select-placeholder">
             <div className="jumbotron">
               <h2 className="text-center">Select states to generate Visualization</h2>
             </div>
