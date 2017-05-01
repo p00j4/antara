@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router';
-
+import domtoimage from 'dom-to-image';
 
 class RightSidebar extends React.Component{
 	constructor(props) {

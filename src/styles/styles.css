@@ -15,7 +15,7 @@
     
     .leftsidebar {
         padding: 0px 25px !important;
-        min-height: 700px;
+        min-height: 100vh;
         background: #F5F6F8 url(bg.png);
     }
     
@@ -70,7 +70,7 @@
         /*  background: rgba(220, 221, 219, 0.1) url(bg.png);
   background:rgba(42, 87, 105, 0.9) url("bg.png");*/
         padding: 25px 0px 0px 0px;
-        min-height: 700px;
+        min-height: 100vh;
         background: rgba(17, 51, 77, 0.01);
         border-left: 1px solid rgba(128, 128, 128, 0.34);
     }
@@ -427,3 +427,6 @@
     h5.budgetattr-year {
         font-weight: bold;
     }
+    .nav-tabs .active a {
+    font-weight: 700;
+}
