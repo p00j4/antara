@@ -46,7 +46,7 @@ class GraphComponent extends React.Component {
 
   componentDidMount(){
     this.setState({selectedAttr:this.props.attrType,indicatorUnit:this.props.data.unit});
-    this.getStateFigures();  	
+    this.getStateFigures();   
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -58,10 +58,10 @@ class GraphComponent extends React.Component {
     }
     if(prevState.value != this.state.value || prevState.selectedAttr != this.state.selectedAttr || prevProps.data !=this.props.data ){
       let stateArray = this.state.value.split(",");
-			let selectedFigures = [];
+      let selectedFigures = [];
 
-			for(let selectedState in stateArray){
-				selectedFigures.push(this.props.data.stateFigures.find(function(value, index) {
+      for(let selectedState in stateArray){
+        selectedFigures.push(this.props.data.stateFigures.find(function(value, index) {
         if(value.state == stateArray[selectedState]){
           return value.state;
            } 
@@ -85,19 +85,19 @@ class GraphComponent extends React.Component {
 
         mungedFigures.push(tempState);
       });
-			
+      
       if(this.state.value[0] == null && prevState.value != null){
         this.setState({selectedFigures:null});
       }
       else{
-			this.setState({selectedFigures:mungedFigures});
+      this.setState({selectedFigures:mungedFigures});
      }
-		}
+    }
 
     if(prevProps.selectedSector != this.props.selectedSector || prevProps.data.slugIndicator != this.props.data.slugIndicator){
           this.updateNotes();
       }
-	}
+  }
 
   updateNotes(){
       let self = this;
