@@ -17,6 +17,8 @@ import {
 import "../../../node_modules/react-vis/dist/style.css";
 import { expenditure_metadata } from "../../data/expenditure_data_metadata";
 
+const {LEFT, RIGHT, TOP, BOTTOM_EDGE, RIGHT_EDGE, TOP_EDGE} =
+  Hint.ALIGN;
 
 class GraphComponent extends React.Component {
   constructor(){
@@ -48,8 +50,6 @@ class GraphComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    console.log("Mount" , this.state.value)
-    
     if (this.state.selectedAttr != this.props.attrType){
       this.setState({selectedAttr:this.props.attrType});
     }
@@ -132,11 +132,30 @@ class GraphComponent extends React.Component {
       this.setState({ value });
     }
 
+    getAlignStyle(align, x, y) {
+    return {
+    right: 0,
+    top: CHART_MARGINS.top + y
+  };
+}
+
 render (){
     let accessthis =this;
     const attributeKey = {"BE":" Budget Estimates", "RE":"Revised Estimates", "A":"Actuals"};
     const color = ['#26393D','#40627C','#D0A825','#D64700','#002A4A','#A7A37E','#B9121B','#1B1E26'].reverse();
-    
+    const DATA_HINT_ALIGN = [{
+      horizontal: RIGHT_EDGE,
+      vertical: TOP
+    }, {
+      horizontal: RIGHT,
+      vertical: BOTTOM_EDGE
+    }, {
+      horizontal: LEFT,
+      vertical: TOP_EDGE
+    }, {
+      horizontal: LEFT,
+      vertical: BOTTOM_EDGE
+    }];
     return(
       <div className="card-container">
         <div className="row-fluid selected-params">
@@ -185,21 +204,24 @@ render (){
               
               <VerticalGridLines />
               {this.state.selectedFigures.map(function(state, index){ 
+             
               return(
                 <VerticalBarSeries
                   color={color[index]}
                   onValueMouseOver = {accessthis.onBarHover}
-                  onValueMouseOut  = {accessthis.outBarHover}
+                  onValueMouseOut = {accessthis.outBarHover}
                   data={state.figures}
-                  key={state.figures}/>
+                  key={state.name}
+                  />
                   );
               })
             } 
            
             <XAxis title="Fiscal Years" />
             <YAxis title ="Indicator"/>
+
             {this.state.hoverValue ? 
-            (<Hint value={this.state.hoverValue}>
+            (<Hint value={this.state.hoverValue}  >
                 <div className="rv-hint__content">
                   <div>
                     <span className="rv-hint__title"> {this.state.hoverValue.state}</span>
