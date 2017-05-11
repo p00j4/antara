@@ -13,7 +13,8 @@ class MainViewComponent extends React.Component {
             viewBy: "choropleth",
             sectorSelected:null, 
             figData: exp_data, 
-            indicatorData: null };
+            indicatorData: null,
+            sectorName:null };
         this.handleChange = this.handleChange.bind(this);
         this.onChangeBudgetAttr =this.onChangeBudgetAttr.bind(this);
     }
@@ -24,7 +25,11 @@ class MainViewComponent extends React.Component {
             }).subIndicators.find((indicator) => {
                 return this.props.params.indicator == indicator.slugIndicator;
             });
-        this.setState({indicatorData:indicator_data, sectorSelected:this.props.params.sector});
+        let sector_name = this.state.figData.find((sector) => {
+            return this.props.params.sector == sector.slugSector; 
+        }).sector;
+
+        this.setState({indicatorData:indicator_data, sectorName:sector_name, sectorSelected:this.props.params.sector});
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -33,8 +38,12 @@ class MainViewComponent extends React.Component {
             }).subIndicators.find((indicator) => {
                 return this.props.params.indicator == indicator.slugIndicator;
             });
+        let sector_name = this.state.figData.find((sector) => {
+            return this.props.params.sector == sector.slugSector; 
+        }).sector;
+        
         if(prevState.indicatorData != indicator_data){
-            this.setState({indicatorData:indicator_data});
+            this.setState({indicatorData:indicator_data, sectorName:sector_name, sectorSelected:this.props.params.sector});
         }
     }
 
@@ -50,12 +59,12 @@ class MainViewComponent extends React.Component {
         return ( 
             <div>
                 <div className = "col-lg-10" >
-                    <div className = "vis-container" >
+                    <div id = "vis-container" >
                     {
                         this.state.viewBy == "choropleth" ? ( 
-                            <Choropleth data={this.state.indicatorData} attrType={this.state.budgetAttr} selectedIndicator={this.state.indicatorData.indicator} selectedSector = {this.state.sectorSelected}/> ) 
+                            <Choropleth data={this.state.indicatorData} attrType={this.state.budgetAttr} selectedIndicator={this.state.indicatorData.indicator} selectedSector = {this.state.sectorSelected} sectorName= {this.state.sectorName}/> ) 
                         :(
-                            <GraphComponent data={this.state.indicatorData} attrType={this.state.budgetAttr} selectedIndicator={this.state.indicatorData.indicator} selectedSector = {this.state.sectorSelected} /> )
+                            <GraphComponent data={this.state.indicatorData} attrType={this.state.budgetAttr} selectedIndicator={this.state.indicatorData.indicator} selectedSector = {this.state.sectorSelected} sectorName= {this.state.sectorName} /> )
                     }
                     </div>
                 </div>
