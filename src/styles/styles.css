@@ -5,6 +5,11 @@
         font-family: 'PT Sans', sans-serif;
     }
     
+    .row {
+        margin-right: 0px!important;
+        margin-left: 0px!important;
+    }
+    
     #app,
     .app-wrapper,
     .leftsidebar {}
@@ -75,7 +80,7 @@
         border-left: 1px solid rgba(128, 128, 128, 0.34);
     }
     
-    .vis-container {
+    #vis-container {
         padding: 0px 20px 20px 0px;
         width: 100%;
         min-height: 650px;
@@ -215,17 +220,17 @@
         border: 2px solid #D3CEAA;
     }
     
-    .leaflet-container {
+    .vis-container {
         height: 430px;
     }
     
     .selected-params {
         /*   margin-left: 100px!important;*/
         padding: 0px 0px 0px 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.19);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.30);
     }
     
-    .card-container {
+    #card-container {
         border-radius: 5px;
         /* padding: 10px 50px 50px 50px; */
         position: relative;
@@ -250,24 +255,24 @@
     }
     
     .indicator-title {
+            font-size: 22px;
         font-weight: bold;
         margin-bottom: 0px;
+        margin-top: 15px;
     }
     
     .indicator-description {
-        padding: 20px;
-        border-top: 1px solid rgba(0, 0, 0, 0.19);
+        padding: 15px;
+        border-top: 1px solid rgba(0, 0, 0, 0.31);
     }
     
     h5.figures-unit {
-        float: right;
         font-weight: bold;
     }
     
     .sub-text {
         padding-left: 0px;
         font-weight: bold;
-        margin-bottom: 10px;
     }
     
     .sub-text h5 {
@@ -294,20 +299,22 @@
     
     .statetoolPanelHeading {
         height: 30px;
+        font-size: 12px;
+        font-weight: bold;
         background-color: rgba(204, 204, 204, 0.7);
     }
     
     .statetooltip {
         position: absolute;
-        top: 80%;
-        right: 3em;
+        bottom: 2em;
+        right: 2em;
         z-index: 10006;
         color: black;
         padding: .5em .75em;
-        font-size: .85em;
+        font-size: 1em;
         display: block;
-        width: 200px;
-        height: 67px;
+        width: 230px;
+        height: 75px;
         background-color: rgba(233, 234, 229, 0.9);
         text-align: center;
         line-height: 30px;
@@ -338,7 +345,7 @@
     }
     
     .row.legend-row {
-        margin-top: 20px;
+        margin-top: 15px;
     }
     
     .rv-discrete-color-legend-item__color {
@@ -364,7 +371,8 @@
     
     .legend-scale ul li {
         display: block;
-        width: 150px;
+        width: 130px;
+        border-radius: 3px;
         border: 1px solid rgba(128, 128, 128, 0.66);
         margin-bottom: 3px;
         text-align: center;
@@ -376,19 +384,27 @@
         display: block;
         float: left;
         height: 20px;
+        border-radius: 3px;
         width: 40px;
     }
     
     .legendspanside {
         background-color: white;
         display: block;
-        height: 20px;
+        height: 22px;
+        padding-top: 2px;
     }
     
     .legendcontainer {
         position: absolute;
+        padding: 5px;
+        background: white;
+        border: 1px solid #cccccc;
         bottom: 2em;
-        left: 4em;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+        left: 2em;
+        font-weight: 700;
         display: block;
         z-index: 180000;
     }
@@ -427,6 +443,44 @@
     h5.budgetattr-year {
         font-weight: bold;
     }
+    
     .nav-tabs .active a {
-    font-weight: 700;
-}
+        font-weight: 700;
+    }
+    
+    h4.sector-title {
+        margin-top: 5px;
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+    
+    .misc-buttons-wrapper {
+        top: 200px;
+        position: relative;
+    }
+    
+    #download_report {
+        margin-left: -10px;
+        margin-top: 15px;
+    }
+    
+    span.share-text.rightsidebar-titles {
+        font-weight: 700;
+        font-size: 15px;
+        padding-bottom: 20px;
+    }
+    
+    .col-lg-10.indicator-title-wrapper {
+        padding-left: 0px;
+    }
+    
+    .col-lg-2.know-more-text {
+        margin-top: 20px;
+        font-weight: 700;
+        text-align: right;
+        /* padding-right: 0px; */
+    }
+    
+    .col-lg-4.sub-text {
+        text-align: right;
+    }

@@ -6,7 +6,7 @@ class App extends React.Component {
 	render(){		
 		return (
 			<div className="app-wrapper ">			
-				<div className="row-fluid full-height">
+				<div className="row full-height">
 					<div className="col-lg-3 leftsidebar ">
 						<LeftSidebar />
 					</div>
