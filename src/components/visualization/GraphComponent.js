@@ -57,6 +57,7 @@ class GraphComponent extends React.Component {
       this.setState({indicatorUnit:this.props.data.unit});
     }
     if(prevState.value != this.state.value || prevState.selectedAttr != this.state.selectedAttr || prevProps.data !=this.props.data ){
+      if(this.state.value != null){
       let stateArray = this.state.value.split(",");
       let selectedFigures = [];
 
@@ -93,11 +94,13 @@ class GraphComponent extends React.Component {
       this.setState({selectedFigures:mungedFigures});
      }
     }
-
+    console.log(prevProps.selectedSector, this.props.selectedSector, prevProps.data.slugIndicator , this.props.data.slugIndicator)
     if(prevProps.selectedSector != this.props.selectedSector || prevProps.data.slugIndicator != this.props.data.slugIndicator){
           this.updateNotes();
+          console.log("updateNotes")
       }
   }
+}
 
   updateNotes(){
       let self = this;
@@ -157,26 +160,33 @@ render (){
       vertical: BOTTOM_EDGE
     }];
     return(
-      <div className="card-container">
-        <div className="row-fluid selected-params">
+      <div id="card-container">
+        <div className="row selected-params">
           <h3 className="indicator-title">
             {this.props.selectedIndicator}
           </h3>
+        <div className="row">
+          <h4 className="sector-title">
+            {this.props.sectorName}
+          </h4> 
+        </div>  
         <div className="row row-sub-text">
-        <div className="col-lg-6 sub-text">
-          <h5>
-            {attributeKey[this.state.selectedAttr]}
-          </h5>      
-        </div>
-        <div className="col-lg-6 sub-text">
-          <h5 className="figures-unit">Figures in {this.state.indicatorUnit}</h5>
-        </div>
+          <div className="col-lg-8 sub-text">
+            <h5>
+              {attributeKey[this.state.selectedAttr]}
+            </h5>      
+          </div>
+          <div className="col-lg-4 sub-text">
+            <h5 className="figures-unit">Figures in {this.state.indicatorUnit}</h5>
+          </div>
         </div>
       </div>  
       <div className="container-fluid graph-container">
-        <div className="row select-container">
-          <div className="col-lg-12 state-select">
-            <Select multi={true} simpleValue value={this.state.value} placeholder="Select a State" options={this.state.stateOptions} onChange={this.handleSelectChange} />
+        <div className="row">
+          <div className="select-container">
+            <div className="col-lg-12 state-select">
+              <Select multi={true} simpleValue value={this.state.value} placeholder="Select a State" options={this.state.stateOptions} onChange={this.handleSelectChange} />
+            </div>
           </div>
         </div>
         {this.state.value[0] != null && this.state.selectedFigures !=null ? 
@@ -249,7 +259,7 @@ render (){
         }
         </div>
        </div>
-       <div className="row-fluid indicator-description">
+       <div className="row indicator-description">
         Source - {this.state.notesText.source}  
       </div>
      </div>
@@ -261,7 +271,8 @@ GraphComponent.propTypes = {
    data: React.PropTypes.object,
    attrType:React.PropTypes.string,
    selectedSector:React.PropTypes.string,
-   selectedIndicator:React.PropTypes.string
+   selectedIndicator:React.PropTypes.string,
+   sectorName:React.PropTypes.string
 };
 
 export default GraphComponent;

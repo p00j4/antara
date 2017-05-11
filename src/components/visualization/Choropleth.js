@@ -10,6 +10,8 @@ import {
   TileLayer, GeoJSON
 } from 'react-leaflet';
 import { expenditure_metadata } from "../../data/expenditure_data_metadata";
+import 'bootstrap/dist/css/bootstrap.css';
+import { concordance_data } from "../../data/concordance_data";
 
 let config = {};
 
@@ -109,8 +111,7 @@ class LegendStep extends React.Component{
   render(){
     return (
         <li>
-        <span className="legendspan" style={{"background" :this.props.bgColor}}></span>
-        <span className="legendspanside">{(this.props.range[0]).toFixed(2)} - {(this.props.range[1]).toFixed(2)}</span>
+        <span className="legendspanside" style={{"background" :this.props.bgColor}}>{(this.props.range[0]).toFixed(2)} - {(this.props.range[1]).toFixed(2)}</span>
         </li>
       );  
   }
@@ -132,7 +133,8 @@ export default class Choropleth extends Component {
         hoverFigure:null,
         indicatorUnit:null,
         bandFigures:null,
-        notesText:null
+        notesText:null,
+        vizActive:true
       };
 
       this.computeBands = this.computeBands.bind(this);
@@ -147,6 +149,7 @@ export default class Choropleth extends Component {
       this.getBandNum = this.getBandNum.bind(this);
       this.fillColor = this.fillColor.bind(this);
       this.updateNotes = this.updateNotes.bind(this);
+      this.showConcordanceData = this.showConcordanceData.bind(this);
     }
 
     componentWillMount(){
@@ -356,25 +359,49 @@ export default class Choropleth extends Component {
     this.setState({hoverstate:null, hoverFigure:null});
   }
 
+  showConcordanceData(){
+    this.setState({vizActive:this.state.vizActive? false : true})
+  }
+
 render (){
   const attributeKey = {"BE":" Budget Estimates", "RE":"Revised Estimates", "A":"Actuals"};
+    console.log(concordance_data)
     return (
-     <div className="card-container">
-      <div className="row-fluid selected-params">
-        <h3 className="indicator-title">{this.props.selectedIndicator} 
-        </h3>
+     <div id="card-container">
+      <div className="row selected-params">
+        <div className="row">
+          <div className="col-lg-10 indicator-title-wrapper">
+            <h3 className="indicator-title">{this.props.selectedIndicator} 
+          </h3>
+          </div>
+          <div className="col-lg-2 know-more-text">
+            <a onClick={this.showConcordanceData}>Know More</a>     
+          </div>
+          
+        </div>
+
+        <div className="row">
+          <div className="col-lg-8 sub-text">
+            <h4 className="sector-title">
+              {this.props.sectorName}
+            </h4>
+          </div>
+        
+        </div>  
         <div className="row row-sub-text">
-        <div className="col-lg-6 sub-text">
-        <h5 className="budgetattr-year">
-          {this.state.selectedYear} | {attributeKey[this.state.budgetAttr]}
-        </h5>      
-        </div>
-        <div className="col-lg-6 sub-text">
-          <h5 className="figures-unit">Unit : <span>Figures in {this.state.indicatorUnit}</span></h5>
-        </div>
+          <div className="col-lg-8 sub-text">
+            <h5 className="budgetattr-year">
+              {this.state.selectedYear} | {attributeKey[this.state.budgetAttr]}
+            </h5>      
+          </div>
+          <div className="col-lg-4 sub-text">
+            <h5 className="figures-unit">Unit : Figures in {this.state.indicatorUnit}</h5>
+          </div>
         </div>
       </div>
-      <div className="row-fluid">
+      <div className="row vis-container">
+      {
+        this.state.vizActive?(
       <Map center={config.params.center} zoom={config.params.zoom} zoomControl={config.params.zoomControl} dragging={config.params.dragging}>
         <TileLayer
         url={config.tileLayer.uri}
@@ -409,8 +436,7 @@ render (){
                 <LegendStep bgColor="#4094B3" band="80%" range={this.state.bandFigures["80%"]}/>
                 <LegendStep bgColor="#406573" band="100%" range={this.state.bandFigures["100%"]}/>
                 <li>
-                  <span className="legendspan" style={{"background" :"#BFBFBF"}}></span>
-                  <span className="legendspanside">Data Unavailable</span>
+                  <span className="legendspanside" style={{"background" :"#BFBFBF"}}>Data Unavailable</span>
                 </li>
             </ul>
           </div>
@@ -419,8 +445,15 @@ render (){
 
 
       </Map>
+      ):
+        (
+          <div className="row">
+          
+          </div>
+        )
+      }
       </div>
-      <div className="row-fluid indicator-description">
+      <div className="row indicator-description">
         Source - {this.state.notesText.source}  
       </div>
       </div>
@@ -432,5 +465,6 @@ Choropleth.propTypes = {
    data: React.PropTypes.object,
    attrType:React.PropTypes.string,
    selectedSector:React.PropTypes.string,
-   selectedIndicator:React.PropTypes.string
+   selectedIndicator:React.PropTypes.string,
+   selectedSector:React.PropTypes.string
 };
