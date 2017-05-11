@@ -2,6 +2,16 @@ import React from 'react';
 import { Link, IndexLink } from 'react-router';
 import domtoimage from 'dom-to-image';
 
+function filter (node) {
+	try {
+		return (node.getAttribute("class") !== 'statetooltip' && node.getAttribute("class")!== "tcontainer" && node.getAttribute("class")!== "select-container" && node.nodeType !=8);
+	}
+	catch(err) {
+    	return true;
+	}		
+}
+
+
 class RightSidebar extends React.Component{
 	constructor(props) {
     super(props);
@@ -11,6 +21,7 @@ class RightSidebar extends React.Component{
     };
     this.handleViewByChange = this.handleViewByChange.bind(this);
     this.handleBudgetAttrChange = this.handleBudgetAttrChange.bind(this);
+  	this.downloadImage = this.downloadImage.bind(this);
   }
   
    handleViewByChange(e) {
@@ -20,12 +31,21 @@ class RightSidebar extends React.Component{
     this.props.viewByChange(e.target.value);
   }
 	
-   handleBudgetAttrChange(e) {
-	this.setState({
-		budgetAttribute:e.target.value
-	});
-    this.props.budgetAttrChange(e.target.value);
-  }  
+   	handleBudgetAttrChange(e) {
+		this.setState({
+			budgetAttribute:e.target.value
+		});
+	    this.props.budgetAttrChange(e.target.value);
+	  }  
+	
+  downloadImage(){
+	  	domtoimage.toBlob(document.getElementById('card-container'), {filter: filter})
+	    .then(blob => {
+	        window.saveAs(blob, 'visualization-report.png');
+	    }).catch(function (error) {
+	     	console.error("Promise Rejected", error);
+		});
+    }
 
 render(){
 	return(
@@ -49,6 +69,14 @@ render(){
 					<button type="button" value="BE" className={this.state.budgetAttribute==="BE" ? "btn btn-default focus active" : "btn btn-default"}  onClick ={this.handleBudgetAttrChange}> Budget Estimates</button>
 					<button type="button" value="RE" className={this.state.budgetAttribute==="RE" ? "btn btn-default focus active" : "btn btn-default"} onClick ={this.handleBudgetAttrChange}>Revised Estimates</button>
 					<button type="button" value="A" className={this.state.budgetAttribute==="A" ? "btn btn-default focus active" : "btn btn-default"}  onClick ={this.handleBudgetAttrChange}>Actuals</button>
+				</div>
+			</div>
+			<div className="row misc-buttons-wrapper">
+				<div className="row  ">
+					<span className="share-text rightsidebar-titles"><i className="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share : </span>
+				</div>
+				<div className="row">
+					<button type="button" value="download" className="btn btn-default" id="download_report" onClick ={this.downloadImage}> <i className="fa fa-download  fa-lg" aria-hidden="false"></i>  Download Report</button>
 				</div>
 			</div>
 		</div>
