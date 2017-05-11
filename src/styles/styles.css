@@ -220,7 +220,7 @@
         border: 2px solid #D3CEAA;
     }
     
-    .vis-container {
+    .vis-wrapper {
         height: 430px;
     }
     
@@ -255,7 +255,7 @@
     }
     
     .indicator-title {
-            font-size: 22px;
+        font-size: 22px;
         font-weight: bold;
         margin-bottom: 0px;
         margin-top: 15px;
@@ -483,4 +483,35 @@
     
     .col-lg-4.sub-text {
         text-align: right;
+    }
+    
+    span.close-icon {
+        float: right;
+        border-radius: 4px;
+        padding: 0px 4px;
+        font-size: 16px;
+    }
+    
+    span.close-icon:hover {
+        background: black;
+        color: white;
+    }
+    
+    span.close-icon:hover a.close-link,
+    a.close-link:hover {
+        color: white;
+    }
+    
+    a.close-link,
+    .know-more-text {
+        cursor: pointer;
+    }
+    
+    i.fa.fa-download.fa-lg {
+        padding-right: 6px;
+    }
+    
+    .concordance-container .panel-heading {
+        font-weight: 700;
+        font-size: 18px;
     }
