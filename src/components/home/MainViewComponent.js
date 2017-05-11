@@ -27,7 +27,7 @@ class MainViewComponent extends React.Component {
             });
         let sector_name = this.state.figData.find((sector) => {
             return this.props.params.sector == sector.slugSector; 
-        }).sector
+        }).sector;
 
         this.setState({indicatorData:indicator_data, sectorName:sector_name, sectorSelected:this.props.params.sector});
     }
@@ -40,7 +40,7 @@ class MainViewComponent extends React.Component {
             });
         let sector_name = this.state.figData.find((sector) => {
             return this.props.params.sector == sector.slugSector; 
-        }).sector
+        }).sector;
         
         if(prevState.indicatorData != indicator_data){
             this.setState({indicatorData:indicator_data, sectorName:sector_name, sectorSelected:this.props.params.sector});
