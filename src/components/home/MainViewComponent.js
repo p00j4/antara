@@ -43,7 +43,7 @@ class MainViewComponent extends React.Component {
         }).sector
         
         if(prevState.indicatorData != indicator_data){
-            this.setState({indicatorData:indicator_data, sectorName:sector_name});
+            this.setState({indicatorData:indicator_data, sectorName:sector_name, sectorSelected:this.props.params.sector});
         }
     }
 
