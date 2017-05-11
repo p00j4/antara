@@ -134,7 +134,8 @@ export default class Choropleth extends Component {
         indicatorUnit:null,
         bandFigures:null,
         notesText:null,
-        vizActive:true
+        vizActive:true,
+        concordanceData:null
       };
 
       this.computeBands = this.computeBands.bind(this);
@@ -150,6 +151,7 @@ export default class Choropleth extends Component {
       this.fillColor = this.fillColor.bind(this);
       this.updateNotes = this.updateNotes.bind(this);
       this.showConcordanceData = this.showConcordanceData.bind(this);
+      this.updateConcordanceData = this.updateConcordanceData.bind(this);
     }
 
     componentWillMount(){
@@ -157,13 +159,14 @@ export default class Choropleth extends Component {
       let MappedFigures = this.mungeData();
       this.setState({selectedFigure: MappedFigures});
       let defaultYear = this.getYearList(this.props.data)[this.getYearList(this.props.data).length -1];
+      this.updateConcordanceData();
       this.setState({budgetAttr:this.props.attrType,selectedYear:defaultYear , indicatorUnit:this.props.data.unit});
       this.computeBands(MappedFigures, defaultYear);
     }
 
     componentDidMount(){
       let defaultYear = this.getYearList(this.props.data)[this.getYearList(this.props.data).length -1];
-      this.setState({budgetAttr:this.props.attrType,selectedYear:defaultYear });
+      this.setState({budgetAttr:this.props.attrType, selectedYear:defaultYear });
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -191,8 +194,13 @@ export default class Choropleth extends Component {
         }
       }
 
+      if(prevProps.selectedSector != this.props.selectedSector){
+        this.updateConcordanceData();
+      }
+
       if(prevProps.selectedSector != this.props.selectedSector || prevProps.data.slugIndicator != this.props.data.slugIndicator){
          this.updateNotes();
+
       }
     }
 
@@ -204,6 +212,16 @@ export default class Choropleth extends Component {
         }
       });
       this.setState({notesText :description});
+    }
+
+    updateConcordanceData(){
+      let selected_sector = this.props.selectedSector;
+      let sector_notes = concordance_data.find(function(sector){
+        if(sector.slugSector == selected_sector){
+          return sector;
+        }
+      });
+      this.setState({concordanceData : sector_notes});
     }
 
     computeBands(tempData, year){
@@ -283,7 +301,7 @@ export default class Choropleth extends Component {
   }
 
   fillColor(band){
-     if (band===0){
+     if (band===0 || band ==null){
       return "#BFBFBF";
      }
      if(band===1){
@@ -360,12 +378,11 @@ export default class Choropleth extends Component {
   }
 
   showConcordanceData(){
-    this.setState({vizActive:this.state.vizActive? false : true})
+    this.setState({vizActive:this.state.vizActive? false : true});
   }
 
 render (){
   const attributeKey = {"BE":" Budget Estimates", "RE":"Revised Estimates", "A":"Actuals"};
-    console.log(concordance_data)
     return (
      <div id="card-container">
       <div className="row selected-params">
@@ -375,7 +392,7 @@ render (){
           </h3>
           </div>
           <div className="col-lg-2 know-more-text">
-            <a onClick={this.showConcordanceData}>Know More</a>     
+            <a className= "know-more-link" onClick={this.showConcordanceData}>Know More</a>     
           </div>
           
         </div>
@@ -399,7 +416,7 @@ render (){
           </div>
         </div>
       </div>
-      <div className="row vis-container">
+      <div className="row vis-wrapper"  style={this.state.vizActive?{"overflow-y":"hidden"}:{"overflow-y":"scroll"}}>
       {
         this.state.vizActive?(
       <Map center={config.params.center} zoom={config.params.zoom} zoomControl={config.params.zoomControl} dragging={config.params.dragging}>
@@ -447,8 +464,29 @@ render (){
       </Map>
       ):
         (
-          <div className="row">
-          
+          <div className="concordance-container">
+            <div className="panel panel-default">
+              <div className="panel-heading"> Concordance Table <span className="close-icon"> <a className= "close-link" onClick={this.showConcordanceData}><i className="fa fa-times" aria-hidden="true"></i></a></span> </div>
+              <table className="table">
+                <thead> 
+                  <tr> 
+                    <th>States</th> 
+                    <th>Details of the Budget Document from which data have been recorded</th> 
+                  </tr> 
+                </thead>
+                <tbody>
+                  {
+                    this.state.concordanceData.state_value.map((state) => {
+                      return(
+                        <tr key={state.name}>
+                          <td>{state.name}</td>
+                          <td>{state.description}</td>
+                        </tr>);
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
         )
       }
@@ -466,5 +504,5 @@ Choropleth.propTypes = {
    attrType:React.PropTypes.string,
    selectedSector:React.PropTypes.string,
    selectedIndicator:React.PropTypes.string,
-   selectedSector:React.PropTypes.string
+   sectorName:React.PropTypes.string
 };
