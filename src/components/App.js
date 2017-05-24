@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import LeftSidebar from "./leftsidebar/LeftSidebar";
-import RightSidebar from "./rightsidebar/RightSidebar";
+import LeftSidebar from "./views/leftsidebar/LeftSidebar";
 
 class App extends React.Component {
 	render(){		
