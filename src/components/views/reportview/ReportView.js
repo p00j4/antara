@@ -2,6 +2,10 @@ import React from 'react';
 import RightSidebar from '../rightsidebar/RightSidebar';
 import Choropleth from "../visualization/Choropleth";
 
+// Incomplete Component. Currently this is just a placeholder.
+// TODO : Build the component. Seperate the view of the report generated in the MainViewComponent form the component.
+
+
 class ReportView extends React.Component {
 
 render(){
