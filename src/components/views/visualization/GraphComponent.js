@@ -14,9 +14,9 @@ import {
   YAxis
 } from 'react-vis';
 
-import "../../../node_modules/react-vis/dist/style.css";
-import { expenditure_metadata } from "../../data/expenditure_data_metadata";
-import { concordance_data } from "../../data/concordance_data";
+import "../../../../node_modules/react-vis/dist/style.css";
+import { expenditure_metadata } from "../../../data/expenditure_data_metadata";
+import { concordance_data } from "../../../data/concordance_data";
 
 const {LEFT, RIGHT, TOP, BOTTOM_EDGE, RIGHT_EDGE, TOP_EDGE} =
   Hint.ALIGN;

@@ -515,3 +515,14 @@
         font-weight: 700;
         font-size: 18px;
     }
+    
+    /*  Home Component */
+    
+    .home-header-wrapper {
+        margin: 20px 0px;
+    }
+    
+    .home-header-wrapper h1 {
+        font-weight: bold;
+        margin: 0px;
+    }

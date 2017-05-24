@@ -1,11 +1,11 @@
 import React from 'react';
-import RightSidebar from '../rightsidebar/RightSidebar';
-import Choropleth from "../visualization/Choropleth";
-import GraphComponent from "../visualization/GraphComponent";
+import RightSidebar from '../views/rightsidebar/RightSidebar';
+import Choropleth from "../views/visualization/Choropleth";
+import GraphComponent from "../views/visualization/GraphComponent";
 import { expenditure_data } from "../../data/expenditure_data";
 
 const exp_data = expenditure_data;
-class MainViewComponent extends React.Component {
+class AppController extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -76,8 +76,8 @@ class MainViewComponent extends React.Component {
         }
     }
 
-MainViewComponent.propTypes = {
+AppController.propTypes = {
    params: React.PropTypes.object
 };
 
-export default MainViewComponent;
+export default AppController;

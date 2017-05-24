@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TopojsonData} from '../../data/StatesTopojson';
+import {TopojsonData} from '../../../data/StatesTopojson';
 import {
   Circle,
   FeatureGroup,
@@ -9,9 +9,9 @@ import {
   Rectangle,
   TileLayer, GeoJSON
 } from 'react-leaflet';
-import { expenditure_metadata } from "../../data/expenditure_data_metadata";
+import { expenditure_metadata } from "../../../data/expenditure_data_metadata";
 import 'bootstrap/dist/css/bootstrap.css';
-import { concordance_data } from "../../data/concordance_data";
+import { concordance_data } from "../../../data/concordance_data";
 
 let config = {};
 

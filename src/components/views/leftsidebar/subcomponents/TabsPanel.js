@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router';
-import {expenditure_data} from "../../../data/expenditure_data";
+import {expenditure_data} from "../../../../data/expenditure_data";
 
 const tabData = [
   { name: 'Expenditure', isActive: true }
