@@ -428,8 +428,8 @@
     }
     
     img.openbudgets-logo {
-        width: 95%;
-        margin-left: 5px;
+        width: 30%;
+        margin-left: 30%;
     }
     
     .row.row-sub-text {
@@ -437,7 +437,7 @@
     }
     
     h2.openbudgets-logo-header {
-        margin-top: 5px;
+        margin-top: 0px;
     }
     
     h5.budgetattr-year {

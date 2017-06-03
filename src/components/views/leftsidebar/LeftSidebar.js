@@ -7,7 +7,7 @@ class LeftSidebar extends React.Component{
 		return(
 		<div>
 			<div className="row-fluid">
-				<IndexLink to="/" className="story-generator-logo"> <h2 className="app-title"> Story Generator<sub className="alpha">ALPHA</sub> <hr className="title-hr" /></h2></IndexLink>
+				<IndexLink to="/" className="story-generator-logo"> <h2 className="app-title"> Akshada Monitoring Tool<sub className="alpha">ALPHA</sub> <hr className="title-hr" /></h2></IndexLink>
 			</div>
 			<div className="select-panel row-fluid">
 				<SelectionPanel />
@@ -16,7 +16,7 @@ class LeftSidebar extends React.Component{
 				<ShareIcons />
 			</div>*/}
 			<div className="row-fluid">
-				<a href="https://openbudgetsindia.org/" className="openbudgets-logo"> <h2 className="openbudgets-logo-header"> <img className="openbudgets-logo" src="https://raw.githubusercontent.com/cbgaindia/portal-design/master/logo_OBI/logo_types/light_bg_logo/draft_final/logo_with_text/draft_final.png" /></h2></a>
+				<a href="http://www.antarafoundation.org/" className="openbudgets-logo"> <h2 className="openbudgets-logo-header"> <img className="openbudgets-logo" src="http://antarafoundation.letternotes.com/wp-content/uploads/2016/11/antara-logo.png" /></h2></a>
 			</div>
 		</div>
 		);

@@ -1,12 +1,12 @@
 let appConfig = {
-	"app.title" : "Story Generator",
+	"app.title" : "Akshada Monitoring Tool",
 	"app.version" : "ALPHA"
 	
 };
 
 let homeComponent = {
-	"primary_header": "OpenBudgets India",
-	"secondary_header" : "Story Generator",
+	"primary_header": "Akshada",
+	"secondary_header" : "Monitoring Tool",
 	"description" : "Select an indicator to generate the visualizations"
 }
 

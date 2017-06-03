@@ -31,11 +31,12 @@
     "ip": "^1.1.5",
     "jquery": "2.2.3",
     "leaflet": "^1.0.3",
-    "react": "15.0.2",
+    "react": "^15.5.4",
     "react-bootstrap": "^0.30.8",
     "react-d3-basic": "^1.6.11",
-    "react-dom": "15.0.2",
+    "react-dom": "^15.5.4",
     "react-leaflet": "1.1.4",
+    "react-native-router-flux": "^3.38.0",
     "react-redux": "4.4.5",
     "react-router": "2.4.0",
     "react-router-redux": "4.0.4",
@@ -43,7 +44,8 @@
     "react-vis": "^1.4.0",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
-    "toastr": "2.1.2"
+    "toastr": "2.1.2",
+    "topojson": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
