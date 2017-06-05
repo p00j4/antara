@@ -1,10 +1,10 @@
 import csv
 import json
 import sys
+import xlrd
 class IndicatorsParser(object):
 
     c = []
-
     def get_indicator_json_from_csv(self, csv_file_name):
         """
         takes csv & constructs required json
